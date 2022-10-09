@@ -1,2 +1,9 @@
 .*.swp
 spectrum_virtualize_exporter
+draft
+spectrum-monitor.yaml
+__debug_bin
+spectrum_virtualize_exporter.tar
+.vscode/launch.json
+grafana_desktop/v7000_rev1.json
+grafana_desktop/v7000_rev2 copy.json

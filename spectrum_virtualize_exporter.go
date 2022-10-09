@@ -35,10 +35,10 @@ import (
 )
 
 var (
-	authMapFile    = flag.String("auth-file", "", "file containing the authentication map to use when connecting to a Spectrum Virtualize device")
+	authMapFile    = flag.String("auth-file", "spectrum-monitor.yaml", "file containing the authentication map to use when connecting to a Spectrum Virtualize device")
 	listen         = flag.String("listen", ":9747", "address to listen on")
 	timeoutSeconds = flag.Int("scrape-timeout", 30, "max seconds to allow a scrape to take")
-	insecure       = flag.Bool("insecure", false, "Allow insecure certificates")
+	insecure       = flag.Bool("insecure", true, "Allow insecure certificates")
 	extraCAs       = flag.String("extra-ca-cert", "", "file containing extra PEMs to add to the CA trust store")
 
 	authMap = map[string]Auth{}

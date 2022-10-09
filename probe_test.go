@@ -60,7 +60,7 @@ func newFakeClient() *fakeClient {
 
 func TestEnclosureStats(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsenclosurestats", "testdata/lsenclosurestats.jsonnet")
+	c.prepare("rest/v1/lsenclosurestats", "testdata/lsenclosurestats.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeEnclosureStats(c, r) {
 		t.Errorf("probeEnclosureStats() returned non-success")
@@ -81,7 +81,7 @@ func TestEnclosureStats(t *testing.T) {
 }
 func TestDrive(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsdrive", "testdata/lsdrive.jsonnet")
+	c.prepare("rest/v1/lsdrive", "testdata/lsdrive.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeDrives(c, r) {
 		t.Errorf("probeDrives() returned non-success")
@@ -108,7 +108,7 @@ func TestDrive(t *testing.T) {
 
 func TestEnclosurePSU(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsenclosurepsu", "testdata/lsenclosurepsu.jsonnet")
+	c.prepare("rest/v1/lsenclosurepsu", "testdata/lsenclosurepsu.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeEnclosurePSUs(c, r) {
 		t.Errorf("probeEnclosurePSUs() returned non-success")
@@ -132,7 +132,7 @@ func TestEnclosurePSU(t *testing.T) {
 
 func TestPool(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsmdiskgrp", "testdata/lsmdiskgrp.jsonnet")
+	c.prepare("rest/v1/lsmdiskgrp", "testdata/lsmdiskgrp.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probePool(c, r) {
 		t.Errorf("probePool() returned non-success")
@@ -164,7 +164,7 @@ func TestPool(t *testing.T) {
 
 func TestNodeStats(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsnodecanisterstats", "testdata/lsnodecanisterstats.jsonnet")
+	c.prepare("rest/v1/lsnodecanisterstats", "testdata/lsnodecanisterstats.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeNodeStats(c, r) {
 		t.Errorf("probeNodeStats() returned non-success")
@@ -220,7 +220,7 @@ func TestNodeStats(t *testing.T) {
 
 func TestFCPorts(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsportfc", "testdata/lsportfc.jsonnet")
+	c.prepare("rest/v1/lsportfc", "testdata/lsportfc.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeFCPorts(c, r) {
 		t.Errorf("probeFCPorts() returned non-success")
@@ -304,7 +304,7 @@ func TestFCPorts(t *testing.T) {
 
 func TestIPPorts(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsportip", "testdata/lsportip.jsonnet")
+	c.prepare("rest/v1/lsportip", "testdata/lsportip.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeIPPorts(c, r) {
 		t.Errorf("probeIPPorts() returned non-success")

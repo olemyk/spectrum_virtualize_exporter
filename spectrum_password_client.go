@@ -78,7 +78,7 @@ func (c *spectrumPasswordClient) String() string {
 
 func newSpectrumPasswordClient(ctx context.Context, tgt url.URL, hc HTTPClient, user string, passwd string) (*spectrumPasswordClient, error) {
 	u := tgt
-	u.Path = "/rest/auth"
+	u.Path = "/rest/v1/auth"
 	r, err := http.NewRequestWithContext(ctx, "POST", u.String(), nil)
 	if err != nil {
 		return nil, err

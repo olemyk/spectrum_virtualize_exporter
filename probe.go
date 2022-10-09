@@ -102,6 +102,90 @@ func probeNodeStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
 			},
 			[]string{"id"},
 		)
+		mMDISKRIO = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_mdisk_read_iops",
+				Help: "Current read I/O-per-second to mdisk",
+			},
+			[]string{"id"},
+		)
+		mMDISKWIO = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_mdisk_write_iops",
+				Help: "Current write I/O-per-second to mdisk",
+			},
+			[]string{"id"},
+		)
+		mMDISKRMS = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_mdisk_read_ms",
+				Help: "Current milliseconds to read from mdisk",
+			},
+			[]string{"id"},
+		)
+		mMDISKWMS = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_mdisk_write_ms",
+				Help: "Current milliseconds to write to mdisk",
+			},
+			[]string{"id"},
+		)
+		mMDISKRMB = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_mdisk_read_mb",
+				Help: "Current Megabytes-per-second being read from mdisk",
+			},
+			[]string{"id"},
+		)
+		mMDISKWMB = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_mdisk_write_mb",
+				Help: "Current Megabytes-per-second being written to mdisk",
+			},
+			[]string{"id"},
+		)
+		mVDISKRIO = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_vdisk_read_iops",
+				Help: "Current read I/O-per-second to vdisk",
+			},
+			[]string{"id"},
+		)
+		mVDISKWIO = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_vdisk_write_iops",
+				Help: "Current write I/O-per-second to vdisk",
+			},
+			[]string{"id"},
+		)
+		mVDISKRMS = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_vdisk_read_ms",
+				Help: "Current milliseconds to read from vdisk",
+			},
+			[]string{"id"},
+		)
+		mVDISKWMS = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_vdisk_write_ms",
+				Help: "Current milliseconds to write to vdisk",
+			},
+			[]string{"id"},
+		)
+		mVDISKRMB = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_vdisk_read_mb",
+				Help: "Current Megabytes-per-second being read from vdisk",
+			},
+			[]string{"id"},
+		)
+		mVDISKWMB = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_node_vdisk_write_mb",
+				Help: "Current Megabytes-per-second being written to vdisk",
+			},
+			[]string{"id"},
+		)
 	)
 
 	registry.MustRegister(mSysCPU)
@@ -114,6 +198,18 @@ func probeNodeStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	registry.MustRegister(mISCSIIO)
 	registry.MustRegister(mSASBytes)
 	registry.MustRegister(mSASIO)
+	registry.MustRegister(mMDISKRIO)
+	registry.MustRegister(mMDISKWIO)
+	registry.MustRegister(mMDISKRMS)
+	registry.MustRegister(mMDISKWMS)
+	registry.MustRegister(mMDISKRMB)
+	registry.MustRegister(mMDISKWMB)
+	registry.MustRegister(mVDISKRIO)
+	registry.MustRegister(mVDISKWIO)
+	registry.MustRegister(mVDISKRMS)
+	registry.MustRegister(mVDISKWMS)
+	registry.MustRegister(mVDISKRMB)
+	registry.MustRegister(mVDISKWMB)
 
 	type nodeStat struct {
 		NodeID      string `json:"node_id"`
@@ -122,7 +218,7 @@ func probeNodeStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	}
 	var st []nodeStat
 
-	if err := c.Get("rest/lsnodecanisterstats", "", &st); err != nil {
+	if err := c.Get("rest/v1/lsnodecanisterstats", "", &st); err != nil {
 		log.Printf("Error: %v", err)
 		return false
 	}
@@ -144,6 +240,30 @@ func probeNodeStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
 			mSASBytes.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent) * 1024 * 1024)
 		} else if s.StatName == "sas_io" {
 			mSASIO.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "mdisk_r_io" {
+			mMDISKRIO.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "mdisk_w_io" {
+			mMDISKWIO.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "mdisk_r_ms" {
+			mMDISKRMS.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "mdisk_w_ms" {
+			mMDISKWMS.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "mdisk_r_mb" {
+			mMDISKRMB.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent) * 1024 * 1024)
+		} else if s.StatName == "mdisk_w_mb" {
+			mMDISKWMB.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent) * 1024 * 1024)
+		} else if s.StatName == "vdisk_r_io" {
+			mVDISKRIO.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "vdisk_w_io" {
+			mVDISKWIO.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "vdisk_r_ms" {
+			mVDISKRMS.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "vdisk_w_ms" {
+			mVDISKWMS.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent))
+		} else if s.StatName == "vdisk_r_mb" {
+			mVDISKRMB.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent) * 1024 * 1024)
+		} else if s.StatName == "vdisk_w_mb" {
+			mVDISKWMB.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent) * 1024 * 1024)
 		} else if s.StatName == "write_cache_pc" {
 			mCacheWrite.WithLabelValues(s.NodeID).Set(float64(s.StatCurrent) / 100.0)
 		} else if s.StatName == "total_cache_pc" {
@@ -181,7 +301,7 @@ func probeEnclosureStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	}
 	var st []enclosureStats
 
-	if err := c.Get("rest/lsenclosurestats", "", &st); err != nil {
+	if err := c.Get("rest/v1/lsenclosurestats", "", &st); err != nil {
 		log.Printf("Error: %v", err)
 		return false
 	}
@@ -222,7 +342,7 @@ func probeDrives(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	}
 	var st []drive
 
-	if err := c.Get("rest/lsdrive", "", &st); err != nil {
+	if err := c.Get("rest/v1/lsdrive", "", &st); err != nil {
 		log.Printf("Error: %v", err)
 		return false
 	}
@@ -264,7 +384,7 @@ func probeEnclosurePSUs(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	}
 	var st []psu
 
-	if err := c.Get("rest/lsenclosurepsu", "", &st); err != nil {
+	if err := c.Get("rest/v1/lsenclosurepsu", "", &st); err != nil {
 		log.Printf("Error: %v", err)
 		return false
 	}
@@ -321,7 +441,7 @@ func probePool(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	}
 	var st []pool
 
-	if err := c.Get("rest/lsmdiskgrp", "", &st); err != nil {
+	if err := c.Get("rest/v1/lsmdiskgrp", "", &st); err != nil {
 		log.Printf("Error: %v", err)
 		return false
 	}
@@ -363,7 +483,87 @@ func probePool(c SpectrumHTTP, registry *prometheus.Registry) bool {
 }
 
 func probeHost(c SpectrumHTTP, registry *prometheus.Registry) bool {
-	// TODO
+	labels := []string{"id", "hostname", "port_count", "protocol"}
+	var (
+		mHostStatus = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_host_status",
+				Help: "Status of hosts",
+			},
+			append(labels, "status"),
+		)
+	)
+
+	registry.MustRegister(mHostStatus)
+
+	type host struct {
+		Status    string `json:"status"`
+		HostID    string `json:"id"`
+		PortCount string `json:"port_count"`
+		Protcol   string `json:"protocol"`
+		HostName  string `json:"name"`
+	}
+	var st []host
+
+	if err := c.Get("rest/v1/lshost", "", &st); err != nil {
+		log.Printf("Error: %v", err)
+		return false
+	}
+
+	for _, s := range st {
+		var son, soff, sdeg float64
+		if s.Status == "online" {
+			son = 1.0
+		} else if s.Status == "offline" {
+			soff = 1.0
+		} else if s.Status == "degraded" {
+			sdeg = 1.0
+		}
+		mHostStatus.WithLabelValues(s.HostID, s.HostName, s.PortCount, s.Protcol, "online").Set(float64(son))
+		mHostStatus.WithLabelValues(s.HostID, s.HostName, s.PortCount, s.Protcol, "offline").Set(float64(soff))
+		mHostStatus.WithLabelValues(s.HostID, s.HostName, s.PortCount, s.Protcol, "degraded").Set(float64(sdeg))
+	}
+	return true
+}
+
+// quorum_id will not be there for ipquorum, and ipquorum object-type: device will be be removed from the list if not in cluster/hyperswap mode
+
+func probeQuorum(c SpectrumHTTP, registry *prometheus.Registry) bool {
+	labels := []string{"id", "object_type"}
+	var (
+		mStatus = prometheus.NewGaugeVec(
+			prometheus.GaugeOpts{
+				Name: "spectrum_quorum_status",
+				Help: "Status of quorum",
+			},
+			append(labels, "status"),
+		)
+	)
+
+	registry.MustRegister(mStatus)
+
+	type quorum struct {
+		Status           string
+		QuorumIndex      string `json:"quorum_index"`
+		QuorumObjectType string `json:"object_type"`
+	}
+	var st []quorum
+
+	if err := c.Get("rest/v1/lsquorum", "", &st); err != nil {
+		log.Printf("Error: %v", err)
+		return false
+	}
+
+	for _, s := range st {
+		var son, soff float64
+		if s.Status == "online" {
+			son = 1.0
+		} else if s.Status == "offline" {
+			soff = 1.0
+		}
+		mStatus.WithLabelValues(s.QuorumIndex, s.QuorumObjectType, "online").Set(float64(son))
+		mStatus.WithLabelValues(s.QuorumIndex, s.QuorumObjectType, "offline").Set(float64(soff))
+	}
 	return true
 }
 
@@ -400,7 +600,7 @@ func probeFCPorts(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	}
 	var st []fcPort
 
-	if err := c.Get("rest/lsportfc", "", &st); err != nil {
+	if err := c.Get("rest/v1/lsportfc", "", &st); err != nil {
 		log.Printf("Error: %v", err)
 		return false
 	}
@@ -471,7 +671,7 @@ func probeIPPorts(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	}
 	var st []ipPort
 
-	if err := c.Get("rest/lsportip", "", &st); err != nil {
+	if err := c.Get("rest/v1/lsportip", "", &st); err != nil {
 		log.Printf("Error: %v", err)
 		return false
 	}
@@ -511,7 +711,6 @@ func probeIPPorts(c SpectrumHTTP, registry *prometheus.Registry) bool {
 		mSpeed.WithLabelValues(s.NodeID, s.AdapterLocation, s.AdapterPortIID).Set(float64(ps))
 	}
 	return true
-	return true
 }
 
 func probe(ctx context.Context, target string, registry *prometheus.Registry, hc *http.Client) (bool, error) {
@@ -542,7 +741,8 @@ func probe(ctx context.Context, target string, registry *prometheus.Registry, hc
 		probeNodeStats(c, registry) &&
 		probeHost(c, registry) &&
 		probeFCPorts(c, registry) &&
-		probeIPPorts(c, registry)
+		probeIPPorts(c, registry) &&
+		probeQuorum(c, registry)
 
 	return success, nil
 }

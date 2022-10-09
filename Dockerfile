@@ -1,9 +1,14 @@
-FROM quay.io/prometheus/golang-builder:1.16.2-base as builder
+#FROM quay.io/prometheus/golang-builder:1.19-base as builder
+FROM quay.io/prometheus/golang-builder:latest as builder
 
 WORKDIR /build
 
 COPY . .
-RUN go get -v -t -d ./...
+#Usage: builder.sh [args]
+#  -i,--import-path arg  : Go import path of the project
+#  -p,--platforms arg    : List of platforms (GOOS/GOARCH) to build separated by a space
+#  -T,--tests            : Go run tests then exit
+RUN go install -v -t --platform linux/arm64 -d ./...
 RUN CGO_ENABLED=0 go build -o main .
 
 FROM scratch
