@@ -2,13 +2,22 @@
 
 ![Go](https://github.com/bluecmd/spectrum_virtualize_exporter/workflows/Go/badge.svg)
 
-Prometheus exporter for IBM Spectrum Virtualize (e.g. IBM Flashsystems).
+Prometheus exporter for IBM Spectrum Virtualize (e.g. IBM FlashSystem).
 
 
 ![SpecV-Prometheus-Exporter](/images/specv-prometheus-exporter.jpg)
 
+## Overview
 
+- Prometheus is the main piece of this setup, it pulls metrics together from Node Exporer and collects them all in one place.
 
+- Node exporter is a small application that queries the Spectrum Virtualize on RestAPI for a variety of metrics and exposes them over HTTP for other services to consume. Prometheus will query one or several Node Exporter instances to aggregate the metrics.
+
+- Grafana is the cherry on top. It takes all the metrics Prometheus has aggregated and displays them as graphs and diagrams organized into dashboards.
+
+![SpecV-Prometheus-Exporter-Grafana](/images/specv_grafana.png)
+
+------
 
 ## Current Limitation
 - Node Exporter won't currently work with SVC Controllers, as lsenclosurestats is not giving out information and lsnodecanister is different for some reason.. 
@@ -138,8 +147,11 @@ Include as much details as possible please, e.g. how the perfect Prometheus metr
 
 ## Option 1: Run on terminal with go installed.
 
+
+> Prerequisites: Go compiler
+
 1. Created a directory
-2. Create a file `spectrum_virtualize_monitor.yml.`
+2. Create a inventory file `spectrum-monitor.yaml`.yml.`
 3. Where `~/spectrum-monitor.yaml` contains pairs of Spectrum targets
 and login information in the following format:
 
@@ -150,6 +162,15 @@ and login information in the following format:
       "https://my-other-v7000:7443":
         user: monitor2
         password: passw0rd1
+    ```
+4. Build the Spectrum-Virtualize-Exporter. 
+    ```
+    export GOPATH=your_gopath
+    cd your_gopath
+    git clone git@github.com:olemyk/spectrum-virtualize-exporter.git
+    cd spectrum-virtualize-exporter
+    go build
+    go install (Optional but recommended. This step will copy spectrum-virtualize-exporter binary package into $GOPATH/bin directory. It will be connvenient to copy the package to Monitoring docker image)
     ```
 
 4. Start the exporter pointing to the auth file and with insecure if you dont have the certificates. 
@@ -165,14 +186,80 @@ and login information in the following format:
 
 
 
-## Option 2: Running the Node Exporter in a Container
+## Option 2: Build and run the Node Exporter in a Container
+
+Build the Spectrum-Virtualize-Exporter. 
+
+  ```sh
+  export GOPATH=your_gopath
+  cd your_gopath
+  git clone git@github.com:olemyk/spectrum-virtualize-exporter.git
+  cd spectrum-virtualize-exporter
+  go build
+  go install (Optional but recommended. This step will copy spectrum-virtualize-exporter binary package into $GOPATH/bin directory. It will be connvenient to copy the package to Monitoring docker image)
+  ```
+
+> docker build -t spectrum-virtualize-exporter .
+
+
+In the Docker files, there is allready a default command running:  `CMD "./main", "-auth-file", "/config/spectrum-monitor.yaml", "-extra-ca-cert", "~/tls.crt"` 
+
+To override this we need to add the commands in the docker/podman command.
+
+- To run it interactivly, with options. 
+  > sudo docker run --name specv_exporter --rm -it --volume $PWD:/config -p 9747:9747/tcp spectrum-virtualize-exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+
+- Run in background,
+  > sudo docker run --name specv_exporter -it -d --volume $PWD:/config -p 9747:9747/tcp spectrum-virtualize-exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
 
 
 
-## Option 3: Running prebuilt Node Exporter in a Container
+------
 
 
 
+## **Option 3:** Running prebuilt Node Exporter in a Container
+
+1. Created a directory `mkdir /srv/spectrum-virtualize-exporter`
+2. Create a inventory file `spectrum-monitor.yaml`
+3. Where `~/spectrum-monitor.yaml` contains pairs of Spectrum targets
+and login information in the following format:
+
+    ```yaml
+      "https://my-v7000:7443":
+        user: monitor
+        password: passw0rd
+      "https://my-other-v7000:7443":
+        user: monitor2
+        password: passw0rd1
+    ```
+
+- Run in background, fro the folder you created in step 1
+  > sudo docker run --name specv_exporter -it -d --volume $PWD:/config -p 9747:9747/tcp spectrum-virtualize-exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+  
+
+
+## Testing the probe:
+```sh
+ % curl -G --data-urlencode "target=https://10.33.7.56:7443" http://localhost:9747/probe
+# HELP probe_duration_seconds How many seconds the probe took to complete
+# TYPE probe_duration_seconds gauge
+probe_duration_seconds 0.785479
+# HELP probe_success Whether or not the probe succeeded
+# TYPE probe_success gauge
+probe_success 1
+# HELP spectrum_drive_status Status of drive
+# TYPE spectrum_drive_status gauge
+spectrum_drive_status{enclosure="1",id="0",slot_id="7",status="degraded"} 0
+spectrum_drive_status{enclosure="1",id="0",slot_id="7",status="offline"} 0
+spectrum_drive_status{enclosure="1",id="0",slot_id="7",status="online"} 1
+spectrum_drive_status{enclosure="1",id="10",slot_id="12",status="degraded"} 0
+spectrum_drive_status{enclosure="1",id="10",slot_id="12",status="offline"} 0
+spectrum_drive_status{enclosure="1",id="10",slot_id="12",status="online"} 1
+spectrum_drive_status{enclosure="1",id="11",slot_id="8",status="degraded"} 0
+spectrum_drive_status{enclosure="1",id="11",slot_id="8",status="offline"} 0
+spectrum_drive_status{enclosure="1",id="11",slot_id="8",status="online"} 1
+```
 
 ## Running the Prometus service/container
 
