@@ -21,7 +21,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -65,7 +65,7 @@ func (c *spectrumPasswordClient) Get(path string, query string, obj interface{})
 		return fmt.Errorf("Response code was %d, expected 200", resp.StatusCode)
 	}
 
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,7 @@ func newSpectrumPasswordClient(ctx context.Context, tgt url.URL, hc HTTPClient, 
 	}
 	var obj login
 
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

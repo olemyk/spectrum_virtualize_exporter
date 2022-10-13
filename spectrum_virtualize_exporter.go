@@ -23,10 +23,10 @@ import (
 	"crypto/x509"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -38,7 +38,7 @@ var (
 	authMapFile    = flag.String("auth-file", "spectrum-monitor.yaml", "file containing the authentication map to use when connecting to a Spectrum Virtualize device")
 	listen         = flag.String("listen", ":9747", "address to listen on")
 	timeoutSeconds = flag.Int("scrape-timeout", 30, "max seconds to allow a scrape to take")
-	insecure       = flag.Bool("insecure", true, "Allow insecure certificates")
+	insecure       = flag.Bool("insecure", false, "Allow insecure certificates")
 	extraCAs       = flag.String("extra-ca-cert", "", "file containing extra PEMs to add to the CA trust store")
 
 	authMap = map[string]Auth{}
@@ -112,7 +112,7 @@ func probeHandler(w http.ResponseWriter, r *http.Request, tr *http.Transport) {
 func main() {
 	flag.Parse()
 
-	af, err := ioutil.ReadFile(*authMapFile)
+	af, err := os.ReadFile(*authMapFile)
 	if err != nil {
 		log.Fatalf("Failed to read API authentication map file: %v", err)
 	}
@@ -126,7 +126,7 @@ func main() {
 		log.Fatalf("Unable to fetch system CA store: %v", err)
 	}
 	if *extraCAs != "" {
-		certs, err := ioutil.ReadFile(*extraCAs)
+		certs, err := os.ReadFile(*extraCAs)
 		if err != nil {
 			log.Fatalf("Failed to read extra CA file: %v", err)
 		}

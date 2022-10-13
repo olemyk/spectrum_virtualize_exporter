@@ -19,8 +19,8 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 	"testing"
 
@@ -35,7 +35,7 @@ type fakeClient struct {
 
 func (c *fakeClient) prepare(path string, jfile string) {
 	vm := jsonnet.MakeVM()
-	b, err := ioutil.ReadFile(jfile)
+	b, err := os.ReadFile(jfile)
 	if err != nil {
 		log.Fatalf("Failed to read jsonnet %q: %v", jfile, err)
 	}

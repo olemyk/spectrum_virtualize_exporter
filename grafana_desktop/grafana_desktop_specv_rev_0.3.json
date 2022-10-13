@@ -61,6 +61,698 @@
           "type": "prometheus",
           "uid": "u2JhtY74k"
         },
+        "description": "Current milliseconds to from vdisk",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "log": 10,
+                "type": "log"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 1
+        },
+        "id": 27,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_vdisk_read_ms)",
+            "interval": "5s",
+            "intervalFactor": 1,
+            "legendFormat": "Current milliseconds to read from vdisk",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_vdisk_write_ms)",
+            "hide": false,
+            "legendFormat": "Current milliseconds to write from vdisk",
+            "range": true,
+            "refId": "B"
+          }
+        ],
+        "title": "Aggregated Volume Response Time  [ms]",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "u2JhtY74k"
+        },
+        "description": "Current milliseconds to write to mdisk",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "log": 10,
+                "type": "log"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": [
+            {
+              "__systemRef": "hideSeriesFrom",
+              "matcher": {
+                "id": "byNames",
+                "options": {
+                  "mode": "exclude",
+                  "names": [
+                    "Aggregated mdisk read ms "
+                  ],
+                  "prefix": "All except:",
+                  "readOnly": true
+                }
+              },
+              "properties": [
+                {
+                  "id": "custom.hideFrom",
+                  "value": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 1
+        },
+        "id": 23,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_mdisk_read_ms)",
+            "interval": "5s",
+            "intervalFactor": 1,
+            "legendFormat": "Current milliseconds to read to mdisk",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_mdisk_write_ms)",
+            "hide": false,
+            "interval": "5s",
+            "legendFormat": "Current milliseconds to write to mdisk",
+            "range": true,
+            "refId": "B"
+          }
+        ],
+        "title": "Aggregated MDISK Response Time  [ms]",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "u2JhtY74k"
+        },
+        "description": "Current Megabytes-per-second to VDISK",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "log": 10,
+                "type": "log"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "Bps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 9
+        },
+        "id": 30,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_vdisk_read_mb)",
+            "interval": "5s",
+            "intervalFactor": 1,
+            "legendFormat": "Current Megabytes-per-second being read to VDISK",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_vdisk_write_mb)",
+            "hide": false,
+            "legendFormat": "Current Megabytes-per-second being written to VDISK",
+            "range": true,
+            "refId": "B"
+          }
+        ],
+        "title": "Aggregated Data Rate to Volume  [Bytes/s]",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "u2JhtY74k"
+        },
+        "description": "Current Megabytes-per-second to mdisk",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "log": 10,
+                "type": "log"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "Bps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 9
+        },
+        "id": 22,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_mdisk_read_mb)",
+            "interval": "5s",
+            "intervalFactor": 1,
+            "legendFormat": "Current Megabytes-per-second being read to mdisk",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_mdisk_write_mb)",
+            "hide": false,
+            "interval": "5",
+            "legendFormat": "Current Megabytes-per-second being written to mdisk",
+            "range": true,
+            "refId": "B"
+          }
+        ],
+        "title": "Aggegrated Data Rate to MDISK [Bytes/s] ",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "u2JhtY74k"
+        },
+        "description": "Current I/O-per-second to vdisk",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "log": 10,
+                "type": "log"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ops"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 17
+        },
+        "id": 28,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "code",
+            "expr": "avg(spectrum_node_vdisk_read_iops)",
+            "interval": "5s",
+            "intervalFactor": 1,
+            "legendFormat": "Current read I/O-per-second to vdisk",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "avg(spectrum_node_vdisk_write_iops)",
+            "hide": false,
+            "interval": "5s",
+            "legendFormat": "Current write I/O-per-second to vdisk",
+            "range": true,
+            "refId": "B"
+          }
+        ],
+        "title": "Aggregated throughput to Volume  [IOps]",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "u2JhtY74k"
+        },
+        "description": "Current  I/O-per-second to MDISK",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "log": 10,
+                "type": "log"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ops"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 17
+        },
+        "id": 39,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_mdisk_read_iops)",
+            "interval": "5s",
+            "intervalFactor": 1,
+            "legendFormat": "Current read I/O-per-second to mdisk",
+            "range": true,
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "u2JhtY74k"
+            },
+            "editorMode": "builder",
+            "expr": "sum(spectrum_node_mdisk_write_iops)",
+            "hide": false,
+            "interval": "5",
+            "legendFormat": "Current write I/O-per-second to mdisk",
+            "range": true,
+            "refId": "B"
+          }
+        ],
+        "title": "Aggegrated throughput to mdisk [IOps]",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "u2JhtY74k"
+        },
         "description": "Combined port load over nodes",
         "fieldConfig": {
           "defaults": {
@@ -120,7 +812,7 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 1
+          "y": 25
         },
         "id": 2,
         "options": {
@@ -142,10 +834,13 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
+            "editorMode": "builder",
+            "exemplar": false,
             "expr": "avg_over_time(spectrum_node_fc_bps{instance=~\"$instance\"}[5m])",
             "interval": "5s",
             "intervalFactor": 1,
             "legendFormat": "FC node {{id}}",
+            "range": true,
             "refId": "A"
           },
           {
@@ -153,6 +848,7 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
+            "editorMode": "builder",
             "expr": "avg_over_time(spectrum_node_iscsi_bps{instance=~\"$instance\"}[5m])",
             "instant": false,
             "interval": "5s",
@@ -227,7 +923,7 @@
           "h": 8,
           "w": 12,
           "x": 12,
-          "y": 1
+          "y": 25
         },
         "id": 13,
         "options": {
@@ -249,9 +945,11 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
-            "expr": "avg_over_time(spectrum_node_fc_iops{instance=~\"$instance\"}[5m])",
+            "editorMode": "builder",
+            "expr": "avg_over_time(spectrum_node_fc_iops{instance=~\"$instance\"}[$__interval])",
             "interval": "",
             "legendFormat": "FC node {{id}}",
+            "range": true,
             "refId": "A"
           },
           {
@@ -259,9 +957,11 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
-            "expr": "avg_over_time(spectrum_node_iscsi_iops{instance=~\"$instance\"}[5m])",
+            "editorMode": "builder",
+            "expr": "avg_over_time(spectrum_node_iscsi_iops{instance=~\"$instance\"}[$__interval])",
             "interval": "",
             "legendFormat": "iSCSI node {{id}}",
+            "range": true,
             "refId": "B"
           }
         ],
@@ -331,7 +1031,7 @@
           "h": 7,
           "w": 12,
           "x": 0,
-          "y": 9
+          "y": 33
         },
         "id": 14,
         "options": {
@@ -353,9 +1053,11 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
-            "expr": "avg_over_time(spectrum_node_sas_bps{instance=~\"$instance\"}[5m])",
+            "editorMode": "builder",
+            "expr": "avg_over_time(spectrum_node_sas_bps{instance=~\"$instance\"}[$__interval])",
             "interval": "",
             "legendFormat": "Node {{id}}",
+            "range": true,
             "refId": "A"
           }
         ],
@@ -425,7 +1127,7 @@
           "h": 7,
           "w": 12,
           "x": 12,
-          "y": 9
+          "y": 33
         },
         "id": 3,
         "options": {
@@ -519,9 +1221,9 @@
         },
         "gridPos": {
           "h": 8,
-          "w": 4,
+          "w": 6,
           "x": 0,
-          "y": 16
+          "y": 40
         },
         "id": 9,
         "options": {
@@ -615,9 +1317,9 @@
         },
         "gridPos": {
           "h": 8,
-          "w": 4,
-          "x": 4,
-          "y": 16
+          "w": 6,
+          "x": 6,
+          "y": 40
         },
         "id": 32,
         "options": {
@@ -659,42 +1361,74 @@
         "fieldConfig": {
           "defaults": {
             "color": {
-              "mode": "thresholds"
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
             },
             "mappings": [],
-            "max": 1,
-            "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
                   "color": "green",
                   "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
                 }
               ]
             },
-            "unit": "none"
+            "unit": "celsius"
           },
           "overrides": []
         },
         "gridPos": {
           "h": 8,
-          "w": 4,
-          "x": 8,
-          "y": 16
+          "w": 6,
+          "x": 12,
+          "y": 40
         },
-        "id": 33,
+        "id": 24,
         "options": {
-          "orientation": "auto",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": false
           },
-          "showThresholdLabels": false,
-          "showThresholdMarkers": true
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
         },
         "pluginVersion": "9.1.6",
         "targets": [
@@ -704,22 +1438,24 @@
               "uid": "u2JhtY74k"
             },
             "editorMode": "code",
-            "expr": "spectrum_pool_volume_count{instance=\"$instance\"}",
+            "exemplar": false,
+            "expr": "spectrum_temperature{instance=~\"$instance\"}",
+            "format": "time_series",
             "interval": "",
-            "legendFormat": "Name: {{name}}",
+            "legendFormat": "Enclosure {{enclosure}}",
             "range": true,
             "refId": "A"
           }
         ],
-        "title": "Volume per Pool  [#]",
-        "type": "gauge"
+        "title": "Enclosure temperature  [C]",
+        "type": "timeseries"
       },
       {
         "datasource": {
           "type": "prometheus",
           "uid": "u2JhtY74k"
         },
-        "description": "Combined port load over nodes",
+        "description": "Power usage by enclosures",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -743,8 +1479,7 @@
               "lineWidth": 1,
               "pointSize": 5,
               "scaleDistribution": {
-                "log": 10,
-                "type": "log"
+                "type": "linear"
               },
               "showPoints": "never",
               "spanNulls": false,
@@ -770,581 +1505,23 @@
                 }
               ]
             },
-            "unit": "Bps"
+            "unit": "watt"
           },
           "overrides": []
         },
         "gridPos": {
           "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 16
-        },
-        "id": 17,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "expr": "avg_over_time(spectrum_node_fc_bps{instance=~\"$instance\"}[5m])",
-            "interval": "5s",
-            "intervalFactor": 1,
-            "legendFormat": "FC node {{id}}",
-            "refId": "A"
-          }
-        ],
-        "title": "Frontend FC-Port load [Bytes/s]",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "description": "Combined port load over nodes",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "log": 10,
-                "type": "log"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "Bps"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 24
-        },
-        "id": 22,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "sum(spectrum_node_mdisk_read_mb)",
-            "interval": "5s",
-            "intervalFactor": 1,
-            "legendFormat": "Aggregated read",
-            "range": true,
-            "refId": "A"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "sum(spectrum_node_mdisk_write_mb)",
-            "hide": false,
-            "legendFormat": "Aggregated write ",
-            "range": true,
-            "refId": "B"
-          }
-        ],
-        "title": "Load from mdisk  [Bytes/s]",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "log": 10,
-                "type": "log"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "ms"
-          },
-          "overrides": [
-            {
-              "__systemRef": "hideSeriesFrom",
-              "matcher": {
-                "id": "byNames",
-                "options": {
-                  "mode": "exclude",
-                  "names": [
-                    "Aggregated mdisk read ms "
-                  ],
-                  "prefix": "All except:",
-                  "readOnly": true
-                }
-              },
-              "properties": [
-                {
-                  "id": "custom.hideFrom",
-                  "value": {
-                    "legend": false,
-                    "tooltip": false,
-                    "viz": true
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 24
-        },
-        "id": 23,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_mdisk_read_ms)",
-            "interval": "5s",
-            "intervalFactor": 1,
-            "legendFormat": "Aggregated mdisk read ms ",
-            "range": true,
-            "refId": "A"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_mdisk_write_ms)",
-            "hide": false,
-            "legendFormat": "Aggregated mdisk write ms",
-            "range": true,
-            "refId": "B"
-          }
-        ],
-        "title": "Responstime to write to mdisk  [ms]",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "log": 10,
-                "type": "log"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "ms"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
-          "y": 32
-        },
-        "id": 27,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_vdisk_read_ms)",
-            "interval": "5s",
-            "intervalFactor": 1,
-            "legendFormat": "Aggregated vdisk read ms ",
-            "range": true,
-            "refId": "A"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_vdisk_read_ms)",
-            "hide": false,
-            "legendFormat": "Aggregated vdisk write ms",
-            "range": true,
-            "refId": "B"
-          }
-        ],
-        "title": "Aggregated Volume Responstime  [ms]",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "log": 10,
-                "type": "log"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "ms"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 32
-        },
-        "id": 29,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_vdisk_read_ms)",
-            "interval": "5s",
-            "intervalFactor": 1,
-            "legendFormat": "Aggregated vdisk read ms ",
-            "range": true,
-            "refId": "A"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_vdisk_read_ms)",
-            "hide": false,
-            "legendFormat": "Aggregated vdisk write ms",
-            "range": true,
-            "refId": "B"
-          }
-        ],
-        "title": "Responstime vdisk  [ms]",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "log": 10,
-                "type": "log"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "ops"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 0,
+          "w": 6,
+          "x": 18,
           "y": 40
         },
-        "id": 28,
+        "id": 16,
         "options": {
           "legend": {
             "calcs": [],
             "displayMode": "list",
             "placement": "bottom",
-            "showLegend": true
+            "showLegend": false
           },
           "tooltip": {
             "mode": "multi",
@@ -1358,137 +1535,17 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_vdisk_read_iops)",
-            "interval": "5s",
-            "intervalFactor": 1,
-            "legendFormat": "Aggregated vdisk read IOps ",
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "spectrum_power_watts{instance=~\"$instance\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "Enclosure {{enclosure}}",
             "range": true,
             "refId": "A"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_vdisk_write_iops)",
-            "hide": false,
-            "legendFormat": "Aggregated vdisk write IOps",
-            "range": true,
-            "refId": "B"
           }
         ],
-        "title": "Aggregated Volume  [IO/s]",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "log": 10,
-                "type": "log"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "Bps"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 40
-        },
-        "id": 30,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_vdisk_read_mb)",
-            "interval": "5s",
-            "intervalFactor": 1,
-            "legendFormat": "Aggregated vdisk read ",
-            "range": true,
-            "refId": "A"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "builder",
-            "expr": "avg(spectrum_node_vdisk_write_mb)",
-            "hide": false,
-            "legendFormat": "Aggregated vdisk write",
-            "range": true,
-            "refId": "B"
-          }
-        ],
-        "title": "Aggregated Volume  [Mb/s]",
+        "title": "Power Usage [W]",
         "type": "timeseries"
       },
       {
@@ -1537,7 +1594,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green"
+                  "color": "green",
+                  "value": null
                 },
                 {
                   "color": "red",
@@ -1640,7 +1698,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green"
+                  "color": "green",
+                  "value": null
                 },
                 {
                   "color": "red",
@@ -1698,206 +1757,12 @@
         "type": "timeseries"
       },
       {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "celsius"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 7,
-          "w": 6,
-          "x": 0,
-          "y": 55
-        },
-        "id": 24,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": false
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "code",
-            "exemplar": false,
-            "expr": "spectrum_temperature{instance=~\"$instance\"}",
-            "format": "time_series",
-            "interval": "",
-            "legendFormat": "Enclosure {{enclosure}}",
-            "range": true,
-            "refId": "A"
-          }
-        ],
-        "title": "Enclosure temperature  [C]",
-        "type": "timeseries"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "description": "Power usage by enclosures",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 10,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "smooth",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "watt"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 7,
-          "w": 6,
-          "x": 6,
-          "y": 55
-        },
-        "id": 16,
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": false
-          },
-          "tooltip": {
-            "mode": "multi",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "code",
-            "exemplar": false,
-            "expr": "spectrum_power_watts{instance=~\"$instance\"}",
-            "format": "time_series",
-            "interval": "",
-            "legendFormat": "Enclosure {{enclosure}}",
-            "range": true,
-            "refId": "A"
-          }
-        ],
-        "title": "Power Usage [W]",
-        "type": "timeseries"
-      },
-      {
         "collapsed": true,
         "gridPos": {
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 62
+          "y": 55
         },
         "id": 21,
         "panels": [],
@@ -1909,38 +1774,36 @@
           "type": "prometheus",
           "uid": "u2JhtY74k"
         },
+        "description": "",
         "fieldConfig": {
           "defaults": {
             "color": {
               "mode": "thresholds"
             },
             "mappings": [],
+            "max": 1,
+            "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green"
-                },
-                {
-                  "color": "#EAB839",
-                  "value": 1
+                  "color": "green",
+                  "value": null
                 }
               ]
-            }
+            },
+            "unit": "none"
           },
           "overrides": []
         },
         "gridPos": {
-          "h": 4,
-          "w": 3,
+          "h": 6,
+          "w": 4,
           "x": 0,
-          "y": 63
+          "y": 56
         },
-        "id": 26,
+        "id": 33,
         "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
           "orientation": "auto",
           "reduceOptions": {
             "calcs": [
@@ -1949,7 +1812,8 @@
             "fields": "",
             "values": false
           },
-          "textMode": "auto"
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
         },
         "pluginVersion": "9.1.6",
         "targets": [
@@ -1958,15 +1822,16 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
-            "editorMode": "builder",
-            "expr": "sum(spectrum_psu_status{status!=\"online\"})",
-            "legendFormat": "{{status}}",
+            "editorMode": "code",
+            "expr": "spectrum_pool_volume_count{instance=\"$instance\"}",
+            "interval": "",
+            "legendFormat": "Name: {{name}}",
             "range": true,
             "refId": "A"
           }
         ],
-        "title": "PowerSupply status [#]",
-        "type": "stat"
+        "title": "Volumes per Pool  [#]",
+        "type": "gauge"
       },
       {
         "datasource": {
@@ -1983,7 +1848,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green"
+                  "color": "green",
+                  "value": null
                 },
                 {
                   "color": "#EAB839",
@@ -1995,10 +1861,10 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 4,
-          "w": 3,
-          "x": 3,
-          "y": 63
+          "h": 6,
+          "w": 4,
+          "x": 4,
+          "y": 56
         },
         "id": 31,
         "options": {
@@ -2029,7 +1895,7 @@
             "refId": "A"
           }
         ],
-        "title": "Pool status [#]",
+        "title": "Pool unexpectedly down or degraded [#]",
         "type": "stat"
       },
       {
@@ -2037,38 +1903,31 @@
           "type": "prometheus",
           "uid": "u2JhtY74k"
         },
+        "description": "",
         "fieldConfig": {
           "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
             "mappings": [],
             "thresholds": {
-              "mode": "absolute",
+              "mode": "percentage",
               "steps": [
                 {
-                  "color": "green"
-                },
-                {
-                  "color": "dark-red",
-                  "value": 1
+                  "color": "green",
+                  "value": null
                 }
               ]
-            }
+            },
+            "unit": "none"
           },
           "overrides": []
         },
         "gridPos": {
-          "h": 4,
-          "w": 3,
-          "x": 6,
-          "y": 63
+          "h": 6,
+          "w": 4,
+          "x": 8,
+          "y": 56
         },
-        "id": 34,
+        "id": 11,
         "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
           "orientation": "auto",
           "reduceOptions": {
             "calcs": [
@@ -2077,7 +1936,8 @@
             "fields": "",
             "values": false
           },
-          "textMode": "auto"
+          "showThresholdLabels": false,
+          "showThresholdMarkers": false
         },
         "pluginVersion": "9.1.6",
         "targets": [
@@ -2086,79 +1946,31 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
-            "editorMode": "builder",
-            "expr": "sum(spectrum_drive_status{status!=\"online\"})",
-            "legendFormat": "Drive Status {{name}}{{status}}",
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "sum(spectrum_quorum_status{status!=\"online\"})",
+            "format": "time_series",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "Offline or Degraded",
             "range": true,
             "refId": "A"
-          }
-        ],
-        "title": "Drive Status unexpectedly down [#]",
-        "type": "stat"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green"
-                },
-                {
-                  "color": "dark-red",
-                  "value": 1
-                }
-              ]
-            }
           },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 4,
-          "w": 3,
-          "x": 9,
-          "y": 63
-        },
-        "id": 36,
-        "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "calcs": [
-              "lastNotNull"
-            ],
-            "fields": "",
-            "values": false
-          },
-          "textMode": "auto"
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
           {
             "datasource": {
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
-            "editorMode": "builder",
-            "expr": "sum(spectrum_drive_status{status!=\"online\"})",
-            "legendFormat": "Drive Status {{name}}{{status}}",
+            "editorMode": "code",
+            "expr": "sum(spectrum_quorum_status{instance=\"$instance\", status=\"online\"})",
+            "hide": false,
+            "legendFormat": "Online",
             "range": true,
-            "refId": "A"
+            "refId": "B"
           }
         ],
-        "title": "Drive Status unexpectedly down [#]",
-        "type": "stat"
+        "title": "Quorum devices status [#]",
+        "type": "gauge"
       },
       {
         "datasource": {
@@ -2173,7 +1985,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green"
+                  "color": "green",
+                  "value": null
                 },
                 {
                   "color": "red",
@@ -2185,10 +1998,10 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 4,
-          "w": 3,
+          "h": 6,
+          "w": 4,
           "x": 12,
-          "y": 63
+          "y": 56
         },
         "id": 12,
         "options": {
@@ -2218,7 +2031,7 @@
             "refId": "B"
           }
         ],
-        "title": "Interfaces IP unexpectedly down [#]",
+        "title": "IP Interfaces unexpectedly down [#]",
         "type": "stat"
       },
       {
@@ -2226,7 +2039,6 @@
           "type": "prometheus",
           "uid": "u2JhtY74k"
         },
-        "description": "",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -2237,11 +2049,12 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green"
+                  "color": "green",
+                  "value": null
                 },
                 {
-                  "color": "red",
-                  "value": 80
+                  "color": "#EAB839",
+                  "value": 1
                 }
               ]
             }
@@ -2249,12 +2062,12 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 4,
-          "w": 3,
-          "x": 15,
-          "y": 63
+          "h": 6,
+          "w": 4,
+          "x": 16,
+          "y": 56
         },
-        "id": 11,
+        "id": 26,
         "options": {
           "colorMode": "value",
           "graphMode": "area",
@@ -2262,7 +2075,7 @@
           "orientation": "auto",
           "reduceOptions": {
             "calcs": [
-              "mean"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -2276,18 +2089,14 @@
               "type": "prometheus",
               "uid": "u2JhtY74k"
             },
-            "editorMode": "code",
-            "exemplar": false,
-            "expr": "sum(spectrum_quorum_status{status!=\"online\"})",
-            "format": "time_series",
-            "instant": false,
-            "interval": "",
-            "legendFormat": "Quorum",
+            "editorMode": "builder",
+            "expr": "sum(spectrum_psu_status{status!=\"online\"})",
+            "legendFormat": "{{status}}",
             "range": true,
             "refId": "A"
           }
         ],
-        "title": "Quorum Device unexpectedly down [#]",
+        "title": "PowerSupply unexpectedly down or degraded [#]",
         "type": "stat"
       },
       {
@@ -2306,7 +2115,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green"
+                  "color": "green",
+                  "value": null
                 },
                 {
                   "color": "red",
@@ -2318,10 +2128,10 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 4,
-          "w": 3,
-          "x": 18,
-          "y": 63
+          "h": 6,
+          "w": 4,
+          "x": 20,
+          "y": 56
         },
         "id": 37,
         "options": {
@@ -2364,7 +2174,6 @@
           "type": "prometheus",
           "uid": "u2JhtY74k"
         },
-        "description": "",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -2375,75 +2184,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green"
-                },
-                {
-                  "color": "red",
-                  "value": 0
-                }
-              ]
-            }
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 4,
-          "w": 3,
-          "x": 21,
-          "y": 63
-        },
-        "id": 38,
-        "options": {
-          "colorMode": "value",
-          "graphMode": "area",
-          "justifyMode": "auto",
-          "orientation": "auto",
-          "reduceOptions": {
-            "calcs": [
-              "mean"
-            ],
-            "fields": "",
-            "values": false
-          },
-          "textMode": "auto"
-        },
-        "pluginVersion": "9.1.6",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "u2JhtY74k"
-            },
-            "editorMode": "code",
-            "exemplar": false,
-            "expr": "sum(spectrum_host_status{status!=\"online\"})",
-            "format": "time_series",
-            "instant": false,
-            "interval": "",
-            "legendFormat": "hosts",
-            "range": true,
-            "refId": "A"
-          }
-        ],
-        "title": "Host Device unexpectedly down or degraded [#]",
-        "type": "stat"
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "u2JhtY74k"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "transparent"
+                  "color": "transparent",
+                  "value": null
                 },
                 {
                   "color": "red",
@@ -2468,10 +2210,10 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 9,
-          "w": 15,
+          "h": 8,
+          "w": 24,
           "x": 0,
-          "y": 67
+          "y": 62
         },
         "id": 35,
         "options": {
@@ -2497,7 +2239,7 @@
             "expr": "spectrum_fc_port_speed_bps",
             "format": "time_series",
             "interval": "",
-            "legendFormat": "N:{{node_id}} - L: {{adapter_location}} - FCP: {{adapter_port_id}}",
+            "legendFormat": "N:{{node_id}} - A: {{adapter_location}} - P: {{adapter_port_id}}",
             "range": true,
             "refId": "A"
           }
@@ -2506,7 +2248,7 @@
         "type": "gauge"
       }
     ],
-    "refresh": "30s",
+    "refresh": false,
     "schemaVersion": 37,
     "style": "dark",
     "tags": [],
@@ -2545,7 +2287,7 @@
       ]
     },
     "time": {
-      "from": "now-1h",
+      "from": "now-5m",
       "to": "now"
     },
     "timepicker": {
@@ -2564,6 +2306,6 @@
     "timezone": "",
     "title": "Spectrum Virtualize Overview New",
     "uid": "nuz5_RI4k",
-    "version": 1,
+    "version": 4,
     "weekStart": ""
   }
