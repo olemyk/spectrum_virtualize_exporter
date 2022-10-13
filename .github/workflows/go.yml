@@ -24,7 +24,13 @@ jobs:
 
     - name: Get dependencies
       run: |
-        go install -v -t -d ./...
+        go get -v -t -d ./...
+
+    - name: Download mod
+      run: go mod download
+
+    - name: Verify mod
+      run: go mod verify
 
     - name: Build
       run: go build -v .
