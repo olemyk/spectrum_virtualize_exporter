@@ -37,18 +37,5 @@
         "override": "no",
         "site_id": "",
         "site_name": ""
-    },
-    {
-        "quorum_index": "3",
-        "status": "online",
-        "id": "",
-        "name": "",
-        "controller_id": "",
-        "controller_name": "",
-        "active": "yes",
-        "object_type": "device",
-        "override": "no",
-        "site_id": "",
-        "site_name": "myklebust.lab.local.net\/10.32.64.222"
     }
 ]

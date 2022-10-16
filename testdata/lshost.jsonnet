@@ -1,7 +1,7 @@
 [
   {
     "id": "2",
-    "name": "zzzzzzzzzzzz",
+    "name": "VM1",
     "port_count": "1",
     "iogrp_count": "4",
     "status": "online",
@@ -13,7 +13,7 @@
   },
   {
     "id": "3",
-    "name": "BCVM1",
+    "name": "VM2",
     "port_count": "3",
     "iogrp_count": "4",
     "status": "degraded",

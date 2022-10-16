@@ -171,8 +171,8 @@
     "node_id": "1",
     "node_name": "node1",
     "stat_name": "vdisk_r_ms",
-    "stat_current": "0",
-    "stat_peak": "0",
+    "stat_current": "1",
+    "stat_peak": "1",
     "stat_peak_time": "200814004929"
   },
   {
@@ -187,7 +187,7 @@
     "node_id": "1",
     "node_name": "node1",
     "stat_name": "vdisk_w_io",
-    "stat_current": "0",
+    "stat_current": "36",
     "stat_peak": "0",
     "stat_peak_time": "200814004929"
   },
@@ -540,7 +540,7 @@
     "node_name": "node2",
     "stat_name": "vdisk_r_ms",
     "stat_current": "1",
-    "stat_peak": "4",
+    "stat_peak": "1",
     "stat_peak_time": "200814004653"
   },
   {
@@ -555,7 +555,7 @@
     "node_id": "2",
     "node_name": "node2",
     "stat_name": "vdisk_w_io",
-    "stat_current": "7",
+    "stat_current": "19",
     "stat_peak": "841",
     "stat_peak_time": "200814004503"
   },
