@@ -233,9 +233,10 @@ and login information in the following format:
         user: monitor2
         password: passw0rd1
     ```
+4. chmod +x spectrum-monitor.yaml
 
-- Run in background, fro the folder you created in step 1
-  > sudo docker run --name specv_exporter -it -d --volume $PWD:/config -p 9747:9747/tcp spectrum-virtualize-exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+- Run in background, from the folder you created in step 1
+  > sudo docker run --name specv_exporter -it -d --volume $PWD:/config -p 9747:9747/tcp ghcr.io/olemyk/spectrum_virtualize_exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
   
 
 
