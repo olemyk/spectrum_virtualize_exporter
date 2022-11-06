@@ -39,7 +39,7 @@ func (c *fakeClient) prepare(path string, jfile string) {
 	if err != nil {
 		log.Fatalf("Failed to read jsonnet %q: %v", jfile, err)
 	}
-	output, err := vm.EvaluateSnippet(jfile, string(b))
+	output, err := vm.EvaluateAnonymousSnippet(jfile, string(b))
 	if err != nil {
 		log.Fatalf("Failed to evaluate jsonnet %q: %v", jfile, err)
 	}

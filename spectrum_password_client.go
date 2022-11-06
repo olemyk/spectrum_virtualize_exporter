@@ -62,7 +62,7 @@ func (c *spectrumPasswordClient) Get(path string, query string, obj interface{})
 		return err
 	}
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("Response code was %d, expected 200", resp.StatusCode)
+		return fmt.Errorf("response code was %d, expected 200", resp.StatusCode)
 	}
 
 	b, err := io.ReadAll(resp.Body)
@@ -90,7 +90,7 @@ func newSpectrumPasswordClient(ctx context.Context, tgt url.URL, hc HTTPClient, 
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("Login code was %d, expected 200", resp.StatusCode)
+		return nil, fmt.Errorf("login code was %d, expected 200", resp.StatusCode)
 	}
 
 	type login struct {

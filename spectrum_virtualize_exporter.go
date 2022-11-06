@@ -56,7 +56,7 @@ type SpectrumHTTP interface {
 func newSpectrumClient(ctx context.Context, tgt url.URL, hc *http.Client) (SpectrumHTTP, error) {
 	auth, ok := authMap[tgt.String()]
 	if !ok {
-		return nil, fmt.Errorf("No API authentication registered for %q", tgt.String())
+		return nil, fmt.Errorf("no api authentication registered for %q", tgt.String())
 	}
 
 	if auth.User != "" && auth.Password != "" {
@@ -66,7 +66,7 @@ func newSpectrumClient(ctx context.Context, tgt url.URL, hc *http.Client) (Spect
 		}
 		return c, nil
 	}
-	return nil, fmt.Errorf("Invalid authentication data for %q", tgt.String())
+	return nil, fmt.Errorf("invalid authentication data for %q", tgt.String())
 }
 
 func probeHandler(w http.ResponseWriter, r *http.Request, tr *http.Transport) {
