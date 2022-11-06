@@ -20,19 +20,18 @@ Prometheus exporter for IBM Spectrum Virtualize (e.g. IBM FlashSystem).
 ------
 
 ## Current Limitation
-- Node Exporter won't currently work with SVC Controllers, as lsenclosurestats is not giving out information and lsnodecanister is different for some reason.. 
-- No performance on volume and singel hosts yet. 
-- Secure traffic, 
-- Need to run 8.4.2 code or later. 
+- Node Exporter currently dont't work with SVC Controllers, as lsenclosurestats is not giving out information and lsnodecanister is different for some reason.. 
+- No performance on volume and singel hosts. (Missing function on SpecV)
+- Secure traffic between 
+- SpecV 8.4.2 code or later.  (New restapi interface from 8.4.2)
 
 ----
 
 ## Tested on:
 
- -  FlashSystem 8.4.2.x
- -  Won't work with SVC Controller, as lsenclosurestats is not working and ls
+ -  IBM FlashSystem 8.4.2.x
 
-  - Won't work on code below: 8.4.0.x
+  - Won't work on SpecV code below: 8.4.0.x
     - 8.4.0.x - don't have the new rest api version rest/v1/x  - they you need change api call to be without v1/ in probe.go
     - 8.1.3.x - don't have the new rest api version rest/v1/x  - they you need change api call to be without v1/ in probe.go
     - 8.1.2.x - getting errors from api calls, 404, 500.  to old code to use time on. 
@@ -84,31 +83,43 @@ Prometheus exporter for IBM Spectrum Virtualize (e.g. IBM FlashSystem).
  * `spectrum_quorum_status`
  * `spectrum_host_status`
 
+## Missing Metrics?
+
+Please [file an issue](https://github.com/bluecmd/spectrum_virtualize_exporter/issues/new) describing what metrics you'd like to see.
+Include as much details as possible please, e.g. how the perfect Prometheus metric would look for your use-case.
+
+---
+
 
 ## Future enhancements
-- Invidual Volume Performance
-- Invidual Host performance. 
-- uptime, drive temp, 
+- IBM SVC support
+- Test on IBM SpecV 8.5.x code. 
+- Display microseconds instead of milliseconds
+- Invidual Volume Performance (When API is available in restapi)
+- Invidual Host performance.  (When API is available in restapi)
+- Uptime, drive temp, 
 
 
+-----
 
-## Usage for Node Exporter.
+## Usage for SpecV Node Exporter.
 
-Example
+
+### **Example**
 
 Build the exporter with Go and start it with:
 
 With certificate.
 
-```yaml
+```sh
 ./spectrum_virtualize_exporter \
   -auth-file ~/spectrum-monitor.yaml \
   -extra-ca-cert ~/namecheap.ca.crt
 ```
 
-For insecure.
+Without the Certificate. use the flag -insecure
 
-```yaml
+```sh
 ./spectrum_virtualize_exporter \
   -auth-file ~/spectrum-monitor.yaml \
   -insecure 
@@ -126,99 +137,24 @@ and login information in the following format:
   password: passw0rd1
 ```
 
-The flag `-extra-ca-cert` is useful as it appears that at least V7000 on the
+The flag `-extra-ca-cert` is useful as it appears that at least SpecV on the
 8.2 version is unable to attach an intermediate CA. 
-from 8.5 you can attach chained root certificates.
+PS: from 8.5 you can attach chained root certificates.
 
-**Users**
-- Users on Spectrum Virtualize, minimum access is with Monitor Role. 
-
-
-
-## Missing Metrics?
-
-Please [file an issue](https://github.com/bluecmd/spectrum_virtualize_exporter/issues/new) describing what metrics you'd like to see.
-Include as much details as possible please, e.g. how the perfect Prometheus metric would look for your use-case.
+### **Users**
+- Users on IBM Spectrum Virtualize, minimum access is with Monitor Role. 
 
 
-# Detail installation instructions
+-----
 
-## Running the exporter for SpecV
+# **Detailed installation instructions for Exporter, Prometeus and Grafana**
 
-## Option 1: Run on terminal with go installed.
-
-
-> Prerequisites: Go compiler
-
-1. Created a directory
-2. Create a inventory file `spectrum-monitor.yaml`.yml.`
-3. Where `~/spectrum-monitor.yaml` contains pairs of Spectrum targets
-and login information in the following format:
-
-    ```yaml
-      "https://my-v7000:7443":
-        user: monitor
-        password: passw0rd
-      "https://my-other-v7000:7443":
-        user: monitor2
-        password: passw0rd1
-    ```
-4. Build the Spectrum-Virtualize-Exporter. 
-    ```
-    export GOPATH=your_gopath
-    cd your_gopath
-    git clone git@github.com:olemyk/spectrum-virtualize-exporter.git
-    cd spectrum-virtualize-exporter
-    go build
-    go install (Optional but recommended. This step will copy spectrum-virtualize-exporter binary package into $GOPATH/bin directory. It will be connvenient to copy the package to Monitoring docker image)
-    ```
-
-4. Start the exporter pointing to the auth file and with insecure if you dont have the certificates. 
-
-    ```yaml
-    ./spectrum_virtualize_exporter \
-      -auth-file ~/spectrum_virtualize_monitorr.yml \
-      -insecure 
-    ```
+## Running the exporter for IBM Spectrum Virtualize
 
 
-
-
-
-
-## Option 2: Build and run the Node Exporter in a Container
-
-Build the Spectrum-Virtualize-Exporter. 
-
-  ```sh
-  export GOPATH=your_gopath
-  cd your_gopath
-  git clone git@github.com:olemyk/spectrum-virtualize-exporter.git
-  cd spectrum-virtualize-exporter
-  go build
-  go install (Optional but recommended. This step will copy spectrum-virtualize-exporter binary package into $GOPATH/bin directory. It will be connvenient to copy the package to Monitoring docker image)
-  ```
-
-> docker build -t spectrum-virtualize-exporter .
-
-
-In the Docker files, there is allready a default command running:  `CMD "./main", "-auth-file", "/config/spectrum-monitor.yaml", "-extra-ca-cert", "~/tls.crt"` 
-
-To override this we need to add the commands in the docker/podman command.
-
-- To run it interactivly, with options. 
-  > sudo docker run --name specv_exporter --rm -it --volume $PWD:/config -p 9747:9747/tcp spectrum-virtualize-exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
-
-- Run in background,
-  > sudo docker run --name specv_exporter -it -d --volume $PWD:/config -p 9747:9747/tcp spectrum-virtualize-exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
-
-
-
-------
-
-
-
-## **Option 3:** Running prebuilt Node Exporter in a Container
+  ### **Option 1:** Running prebuilt Node Exporter in a Container
+  > Image is buildt for `linux/amd64,linux/arm64,linux/ppc64le`
+  ---
 
 1. Created a directory `mkdir /srv/spectrum-virtualize-exporter`
 2. Create a inventory file `spectrum-monitor.yaml`
@@ -233,14 +169,17 @@ and login information in the following format:
         user: monitor2
         password: passw0rd1
     ```
-4. chmod +x spectrum-monitor.yaml
+4. `chmod +x spectrum-monitor.yaml`
 
 - Run in background, from the folder you created in step 1
-  > sudo docker run --name specv_exporter -it -d --volume $PWD:/config -p 9747:9747/tcp ghcr.io/olemyk/spectrum_virtualize_exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+  > docker run --name specv_exporter -it -d --volume $PWD:/config:Z -p 9747:9747/tcp ghcr.io/olemyk/spectrum_virtualize_exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+- Run interactiv
+  > docker run --name specv_exporter -i --volume $PWD:/config:Z -p 9747:9747/tcp ghcr.io/olemyk/spectrum_virtualize_exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
   
+  ***PS: the :Z option in the volume is for selinux
+    This will label the content inside the container with the exact MCS label that the container will run with, basically it runs chcon -Rt svirt_sandbox_file_t -l s0:c1,c2 /var/db where s0:c1,c2 differs for each container.***
 
-
-## Testing the probe:
+### **Testing the probe:**
 ```sh
  % curl -G --data-urlencode "target=https://10.33.7.56:7443" http://localhost:9747/probe
 # HELP probe_duration_seconds How many seconds the probe took to complete
@@ -262,6 +201,103 @@ spectrum_drive_status{enclosure="1",id="11",slot_id="8",status="offline"} 0
 spectrum_drive_status{enclosure="1",id="11",slot_id="8",status="online"} 1
 ```
 
+
+### Option 2: Run on terminal with go installed.
+
+
+> **Prerequisites: Go compiler**
+
+1. Created a directory
+2. Create a inventory file `spectrum-monitor.yaml`.yml.`
+3. Where `~/spectrum-monitor.yaml` contains pairs of Spectrum targets
+and login information in the following format:
+
+    ```yaml
+      "https://my-v7000:7443":
+        user: monitor
+        password: passw0rd
+      "https://my-other-v7000:7443":
+        user: monitor2
+        password: passw0rd1
+    ```
+4. Build the Spectrum-Virtualize-Exporter. 
+
+    ```sh
+    export GOPATH=your_gopath
+    cd your_gopath
+    git clone git@github.com:olemyk/spectrum-virtualize-exporter.git
+    cd spectrum-virtualize-exporter
+    go build
+    go install (Optional but recommended. This step will copy spectrum-virtualize-exporter binary package into $GOPATH/bin directory. It will be connvenient to copy the package to Monitoring docker image)
+    ```
+
+4. Start the exporter pointing to the auth file and with insecure if you dont have the certificates. 
+
+    ```yaml
+    ./spectrum_virtualize_exporter \
+      -auth-file ~/spectrum_virtualize_monitor.yml 
+      \ -insecure 
+    ```
+
+
+### Option 3: Build and run the Node Exporter in a Container
+
+1. Build the Spectrum-Virtualize-Exporter. 
+  ```sh
+  export GOPATH=your_gopath
+  cd your_gopath
+  git clone git@github.com:olemyk/spectrum-virtualize-exporter.git
+  cd spectrum-virtualize-exporter
+  go build
+  go install (Optional but recommended. This step will copy spectrum-virtualize-exporter binary package into $GOPATH/bin directory. It will be connvenient to copy the package to docker image)
+  ```
+
+> docker build -t spectrum_virtualize_exporter .
+
+In the Docker files, there is allready a default command running:
+  ``` sh
+  `CMD "./main", "-auth-file", "/config/spectrum-monitor.yaml", "-extra-ca-cert", "~/tls.crt"` 
+  ```
+
+To override this we need to add the commands in the docker/podman command.
+
+- To run it interactivly, with options. 
+  > sudo docker run --name specv_exporter --rm -it --volume $PWD:/config -p 9747:9747/tcp spectrum-virtualize-exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+
+- Run in background,
+  > sudo docker run --name specv_exporter -it -d --volume $PWD:/config -p 9747:9747/tcp spectrum-virtualize-exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+
+
+2. Created a directory `mkdir /srv/spectrum-virtualize-exporter`
+3. Create a inventory file `spectrum-monitor.yaml`
+4. Where `~/spectrum-monitor.yaml` contains pairs of Spectrum targets
+and login information in the following format:
+
+    ```yaml
+      "https://my-v7000:7443":
+        user: monitor
+        password: passw0rd
+      "https://my-other-v7000:7443":
+        user: monitor2
+        password: passw0rd1
+    ```
+5. `chmod +x spectrum-monitor.yaml`
+
+
+  Run container in background, from the folder you created in step 2
+
+  > docker run --name specv_exporter -it -d --volume $PWD:/config:Z -p 9747:9747/tcp spectrum_virtualize_exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+
+ Run container interactive
+  > docker run --name specv_exporter -i --volume $PWD:/config:Z -p 9747:9747/tcp spectrum_virtualize_exporter:latest ./main -auth-file /config/spectrum-monitor.yaml -insecure
+  
+  ***PS: the :Z option in the volume is for selinux
+    This will label the content inside the container with the exact MCS label that the container will run with, basically it runs chcon -Rt svirt_sandbox_file_t -l s0:c1,c2 /var/db where s0:c1,c2 differs for each container.***
+
+
+
+------
+
 ## Running the Prometus service/container
 
 Create a folder to store the **prometheus.yml** file.
@@ -269,9 +305,8 @@ Create a folder to store the **prometheus.yml** file.
 > mkdir /srv/prometheus
 
 
-Default prometheus.yml
-```  yaml
-/etc/prometheus/prometheus.yml
+Default prometheus.yml > `/etc/prometheus/prometheus.yml`
+```yaml
 # my global config
 global:
   scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
@@ -305,6 +340,8 @@ scrape_configs:
 
 Add the following lines, then change the **replacement** ip/hostname and **targets** ip/hostname
 
+- **Replacement:** is Node Exporter ip and Port
+- **Targets:** is SpecV Cluster IP.
 
 ```yaml
   - job_name: spectrum_virtualize
@@ -335,6 +372,7 @@ Add the following lines, then change the **replacement** ip/hostname and **targe
 ```
 
 My Global config file
+> /srv/prometheus/prometheus.yml
 
 ```yaml
 # my global config
@@ -394,11 +432,12 @@ scrape_configs:
 ```
 
 
-cd into folder
-> docker run -d -p 9090:9090 --restart always -v $PWD/prometheus.yml:/etc/prometheus/prometheus.yml --name prometheus prom/prometheus
+ cd into folder you created and store the config and run: 
+> docker run -d -p 9090:9090 --restart always -v $PWD/prometheus.yml:/etc/prometheus/prometheus.yml:Z --name prometheus docker.io/prom/prometheus
+- Option Z is for SELINUX
 
 Optional: to log into the container
->  docker exec -it prometheus sh
+> docker exec -it prometheus sh
 
 
 
@@ -407,11 +446,9 @@ After you have started up the container, you should start up browser and point i
 ![Prometheus](/images/specv_exporter_1.png)
 
 
-
-
 To Test that we can see data, we can do following: 
 
-Press the endpoint http://ip:9797/probe and you will get information about probe metrics. 
+Press the endpoint http://ip:9747/probe and you will get information about probe metrics. 
 
 ![Prometheus](/images/specv_exporter_2.png)
 
@@ -446,41 +483,50 @@ spectrum_drive_status{enclosure="1",id="11",slot_id="8",status="offline"} 0
 spectrum_drive_status{enclosure="1",id="11",slot_id="8",status="online"} 1
 ```
 
-https://grafana.com/api/dashboards/13753/images/9734/image
-
-
-
 ## Running the Grafana service/container
 
 Create a folder to store data, /srv/opt
 
-> docker run -d --volume "$PWD/data:/var/lib/grafana" -p 3000:3000 grafana/grafana-enterprise
+> mkdir -p /srv/grafana/ 
 
+> cd into /srv/grafana/
 
+> docker run -d --name prometheus --volume "$PWD/data:/var/lib/grafana" -p 3000:3000 docker.io/grafana/grafana-enterprise
+
+For ppc64le
+I have not found any offical grafana for ppc64le (IBM Power) as a container. 
+
+If you search for Grafana and IBM Power, and you will find it as RPM you can install.
+
+https://www.power-devops.com/grafana
+
+----
 Access the Grafana GUI with https://ip:3000
 
-Then go to DataSources and add new Prometheus Source. 
-Point the url to Prometheus instance with the IP/Hostname and the Port 9090
-Running http for now..   
-http method should be POST
+- Then go to DataSources and add new Prometheus Source. 
+  - The Name should be **prometheus_specv** or else you need to change the grafana   datasource in the json.
+  - Point the url to Prometheus instance with the IP/Hostname and the Port 9090
+    - Running http for now..   
+- http method: POST
+- Press Save & test and check that you get, Data source is working
 
-Press save and test.
-
-![Prometheus](/images/specv_exporter_9.png) 
-
-
-
-Then Import the SpecV dashboard: 
-orginally this was hosted here: Now i have updated it and the copy of the JSON is located in Github
-https://grafana.com/grafana/dashboards/13753-v7000/
-
-
-### ![Prometheus](/images/specv_exporter_5.png) 
-<img src="/images/specv_exporter_5.png" width="700" height="500">
+![Prometheus](/images/specv_exporter_11.png) 
 
 
 
+## Then Import the SpecV dashboard: 
+- Orginally this was hosted here: https://grafana.com/grafana/dashboards/13753-v7000/
 
+ - Now i have updated it and the copy of the JSON is located in the grafana_dekstop folder in the github repo. (will maybe create a Grafana id)
+ - Access the Grafana GUI with https://ip:3000
+    - Go to Dashboard and press import
+    - Copy the content from `grafana_desktop_specv_rev_x.json` in the github repo. to the Import via panel json. 
+
+    <img src="/images/specv_exporter_12.png" width="700" height="500">
+
+  - Now Change the Name of the dashboard if you want, the UID should now be **promethes_specv** or the name you called the the Prometheus Datasource. 
+
+    <img src="/images/specv_exporter_13.png" width="700" height="500">
 
 
 
@@ -531,26 +577,25 @@ If you are getting errors from API:
 
 
 Errors:
-When testing on 8.2 code on a Storwize 7000
-i got error: Probe request rejected; error is: Login code was 404, expected 200
-Upgraded to 8.3.1.7 and then it worked, with the -insecure flag, this was with code that not called the version 1/v1 of the api but v0 (default if noy spesificed)
-From 8.4.2.0 the restapi have been upgraded, so we need to change the url to contain rest/v1/*
+When testing on 8.2 code on a SpecV. i got error: Probe request rejected; error is: Login code was 404, expected 200
+Upgraded then to 8.3.1.7 and then it worked, with the -insecure flag, this was with code that's "called" the version /v0 of the API (default if not specified)
+From 8.4.2.0 the SpecV restapi interface have been upgraded, so we need to change the url to contain rest/v1/*
 
 
-### Some Error that i have experiance: 
+### Some error codes that i have experiance: 
 
 **Error: 500**
 ```sh
 Error: 500 - Internal error
 ```
-This was trowned at me on newer Spectrum Virtualize code and SVC, could be that this was beacuse we where using v0 of the restapi interface, and now we are using v1 and it have better error handling.   or it beause of SVC
+This was trowned at me on newer Spectrum Virtualize code and SVC, could be that this was beacuse we where using v0 of the restapi interface, and now we are using v1 and it have better error handling...
 
 **Error 409**
-``` sh
+```sh
 022/09/19 19:43:52 Error: Response code was 409, expected 200
 ```
 This normally when you send and command or options in the restapi command that don't exist
-Example i was trying to run this against a SVC and recived error 409, checked then the commands that would be run agains SpecV, example lsenclosurestats is not available SVC. 
+Example i was trying to run this against a SVC and received error 409, checked and then run then same command with CLI against SpecV, example lsenclosurestats is not available SVC. 
 
 Se example below: 
 

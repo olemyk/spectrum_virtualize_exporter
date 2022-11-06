@@ -59,7 +59,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Current milliseconds to from vdisk",
         "fieldConfig": {
@@ -140,7 +140,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_vdisk_read_ms)",
@@ -153,7 +153,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_vdisk_write_ms)",
@@ -169,7 +169,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Current milliseconds to write to mdisk",
         "fieldConfig": {
@@ -275,7 +275,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_mdisk_read_ms)",
@@ -288,7 +288,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_mdisk_write_ms)",
@@ -305,7 +305,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Current Megabytes-per-second to VDISK",
         "fieldConfig": {
@@ -386,7 +386,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_vdisk_read_mb)",
@@ -399,7 +399,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_vdisk_write_mb)",
@@ -415,7 +415,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Current Megabytes-per-second to mdisk",
         "fieldConfig": {
@@ -496,7 +496,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_mdisk_read_mb)",
@@ -509,7 +509,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_mdisk_write_mb)",
@@ -526,7 +526,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Current I/O-per-second to vdisk",
         "fieldConfig": {
@@ -607,7 +607,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "code",
             "expr": "avg(spectrum_node_vdisk_read_iops)",
@@ -620,7 +620,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "avg(spectrum_node_vdisk_write_iops)",
@@ -637,7 +637,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Current  I/O-per-second to MDISK",
         "fieldConfig": {
@@ -721,7 +721,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_mdisk_read_iops)",
@@ -734,7 +734,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_node_mdisk_write_iops)",
@@ -751,7 +751,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Combined port load over nodes",
         "fieldConfig": {
@@ -832,7 +832,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "exemplar": false,
@@ -846,7 +846,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "avg_over_time(spectrum_node_iscsi_bps{instance=~\"$instance\"}[5m])",
@@ -862,7 +862,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Combined port load over nodes.",
         "fieldConfig": {
@@ -943,7 +943,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "avg_over_time(spectrum_node_fc_iops{instance=~\"$instance\"}[$__interval])",
@@ -955,7 +955,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "avg_over_time(spectrum_node_iscsi_iops{instance=~\"$instance\"}[$__interval])",
@@ -971,7 +971,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Backend SAS Load over Nodes",
         "fieldConfig": {
@@ -1051,7 +1051,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "avg_over_time(spectrum_node_sas_bps{instance=~\"$instance\"}[$__interval])",
@@ -1067,7 +1067,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Backend SAS Load over Nodes",
         "fieldConfig": {
@@ -1147,7 +1147,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "expr": "avg_over_time(spectrum_node_sas_iops{instance=~\"$instance\"}[5m])",
             "interval": "",
@@ -1161,7 +1161,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "",
         "fieldConfig": {
@@ -1243,7 +1243,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "expr": "spectrum_pool_used_bytes{instance=~\"$instance\"}/spectrum_pool_capacity_bytes{instance=~\"$instance\"}",
             "interval": "",
@@ -1257,7 +1257,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "",
         "fieldConfig": {
@@ -1339,7 +1339,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "code",
             "expr": "spectrum_pool_free_bytes{instance=~\"$instance\"}/spectrum_pool_capacity_bytes{instance=~\"$instance\"}",
@@ -1355,7 +1355,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "",
         "fieldConfig": {
@@ -1435,7 +1435,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "code",
             "exemplar": false,
@@ -1453,7 +1453,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Power usage by enclosures",
         "fieldConfig": {
@@ -1533,7 +1533,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "code",
             "exemplar": false,
@@ -1551,7 +1551,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "CPU usage by nodes.",
         "fieldConfig": {
@@ -1631,7 +1631,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "expr": "spectrum_node_compression_usage_ratio{instance=~\"$instance\"}",
             "interval": "",
@@ -1641,7 +1641,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "expr": "spectrum_node_system_usage_ratio{instance=~\"$instance\"}",
             "interval": "",
@@ -1655,7 +1655,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "Node Cache usage",
         "fieldConfig": {
@@ -1735,7 +1735,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "expr": "spectrum_node_write_cache_usage_ratio{instance=~\"$instance\"}",
             "interval": "",
@@ -1745,7 +1745,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "expr": "spectrum_node_total_cache_usage_ratio{instance=~\"$instance\"}",
             "interval": "",
@@ -1772,7 +1772,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "",
         "fieldConfig": {
@@ -1820,7 +1820,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "code",
             "expr": "spectrum_pool_volume_count{instance=\"$instance\"}",
@@ -1836,7 +1836,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "fieldConfig": {
           "defaults": {
@@ -1886,7 +1886,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_pool_status{status!=\"online\"})",
@@ -1901,7 +1901,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "",
         "fieldConfig": {
@@ -1944,7 +1944,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "code",
             "exemplar": false,
@@ -1959,7 +1959,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "code",
             "expr": "sum(spectrum_quorum_status{instance=\"$instance\", status=\"online\"})",
@@ -1975,7 +1975,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "",
         "fieldConfig": {
@@ -2023,7 +2023,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "expr": "sum(spectrum_ip_port_state{instance=~\"$instance\",state=\"configured\"} == 1 and on (mac) spectrum_ip_port_link_active{instance=~\"$instance\"} == 0) or vector(0)",
             "interval": "",
@@ -2037,7 +2037,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "fieldConfig": {
           "defaults": {
@@ -2087,7 +2087,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "sum(spectrum_psu_status{status!=\"online\"})",
@@ -2102,7 +2102,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "description": "",
         "fieldConfig": {
@@ -2153,7 +2153,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "code",
             "exemplar": false,
@@ -2172,7 +2172,7 @@
       {
         "datasource": {
           "type": "prometheus",
-          "uid": "u2JhtY74k"
+          "uid": "prometheus_specv"
         },
         "fieldConfig": {
           "defaults": {
@@ -2233,7 +2233,7 @@
           {
             "datasource": {
               "type": "prometheus",
-              "uid": "u2JhtY74k"
+              "uid": "prometheus_specv"
             },
             "editorMode": "builder",
             "expr": "spectrum_fc_port_speed_bps",
@@ -2255,14 +2255,9 @@
     "templating": {
       "list": [
         {
-          "current": {
-            "selected": true,
-            "text": "10.32.64.182",
-            "value": "10.32.64.182"
-          },
           "datasource": {
             "type": "prometheus",
-            "uid": "u2JhtY74k"
+            "uid": "prometheus_specv"
           },
           "definition": "label_values(spectrum_temperature, instance)",
           "hide": 0,
@@ -2305,7 +2300,7 @@
     },
     "timezone": "",
     "title": "Spectrum Virtualize Overview New",
-    "uid": "nuz5_RI4k",
+    "uid": "prometheus_specv",
     "version": 4,
     "weekStart": ""
   }
