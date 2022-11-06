@@ -1,2 +1,9 @@
 .*.swp
 spectrum_virtualize_exporter
+spectrum-monitor.yaml
+__debug_bin
+spectrum_virtualize_exporter.tar
+.vscode/launch.json
+task.json
+.github/workflows/.DS_Store
+.github/.DS_Store

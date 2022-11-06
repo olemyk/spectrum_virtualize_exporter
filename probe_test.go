@@ -19,8 +19,8 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 	"testing"
 
@@ -35,11 +35,11 @@ type fakeClient struct {
 
 func (c *fakeClient) prepare(path string, jfile string) {
 	vm := jsonnet.MakeVM()
-	b, err := ioutil.ReadFile(jfile)
+	b, err := os.ReadFile(jfile)
 	if err != nil {
 		log.Fatalf("Failed to read jsonnet %q: %v", jfile, err)
 	}
-	output, err := vm.EvaluateSnippet(jfile, string(b))
+	output, err := vm.EvaluateAnonymousSnippet(jfile, string(b))
 	if err != nil {
 		log.Fatalf("Failed to evaluate jsonnet %q: %v", jfile, err)
 	}
@@ -60,7 +60,7 @@ func newFakeClient() *fakeClient {
 
 func TestEnclosureStats(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsenclosurestats", "testdata/lsenclosurestats.jsonnet")
+	c.prepare("rest/v1/lsenclosurestats", "testdata/lsenclosurestats.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeEnclosureStats(c, r) {
 		t.Errorf("probeEnclosureStats() returned non-success")
@@ -81,7 +81,7 @@ func TestEnclosureStats(t *testing.T) {
 }
 func TestDrive(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsdrive", "testdata/lsdrive.jsonnet")
+	c.prepare("rest/v1/lsdrive", "testdata/lsdrive.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeDrives(c, r) {
 		t.Errorf("probeDrives() returned non-success")
@@ -108,7 +108,7 @@ func TestDrive(t *testing.T) {
 
 func TestEnclosurePSU(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsenclosurepsu", "testdata/lsenclosurepsu.jsonnet")
+	c.prepare("rest/v1/lsenclosurepsu", "testdata/lsenclosurepsu.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeEnclosurePSUs(c, r) {
 		t.Errorf("probeEnclosurePSUs() returned non-success")
@@ -132,7 +132,7 @@ func TestEnclosurePSU(t *testing.T) {
 
 func TestPool(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsmdiskgrp", "testdata/lsmdiskgrp.jsonnet")
+	c.prepare("rest/v1/lsmdiskgrp", "testdata/lsmdiskgrp.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probePool(c, r) {
 		t.Errorf("probePool() returned non-success")
@@ -164,7 +164,7 @@ func TestPool(t *testing.T) {
 
 func TestNodeStats(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsnodecanisterstats", "testdata/lsnodecanisterstats.jsonnet")
+	c.prepare("rest/v1/lsnodecanisterstats", "testdata/lsnodecanisterstats.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeNodeStats(c, r) {
 		t.Errorf("probeNodeStats() returned non-success")
@@ -191,6 +191,30 @@ func TestNodeStats(t *testing.T) {
 	# TYPE spectrum_node_iscsi_iops gauge
 	spectrum_node_iscsi_iops{id="1"} 0
 	spectrum_node_iscsi_iops{id="2"} 11
+	# HELP spectrum_node_mdisk_read_iops Current read I/O-per-second to mdisk
+	# TYPE spectrum_node_mdisk_read_iops gauge
+	spectrum_node_mdisk_read_iops{id="1"} 0
+	spectrum_node_mdisk_read_iops{id="2"} 0
+	# HELP spectrum_node_mdisk_read_mb Current Megabytes-per-second being read from mdisk
+	# TYPE spectrum_node_mdisk_read_mb gauge
+	spectrum_node_mdisk_read_mb{id="1"} 0
+	spectrum_node_mdisk_read_mb{id="2"} 0
+	# HELP spectrum_node_mdisk_read_ms Current milliseconds to read from mdisk
+	# TYPE spectrum_node_mdisk_read_ms gauge
+	spectrum_node_mdisk_read_ms{id="1"} 0
+	spectrum_node_mdisk_read_ms{id="2"} 0
+	# HELP spectrum_node_mdisk_write_iops Current write I/O-per-second to mdisk
+	# TYPE spectrum_node_mdisk_write_iops gauge
+	spectrum_node_mdisk_write_iops{id="1"} 0
+	spectrum_node_mdisk_write_iops{id="2"} 0
+	# HELP spectrum_node_mdisk_write_mb Current Megabytes-per-second being written to mdisk
+	# TYPE spectrum_node_mdisk_write_mb gauge
+	spectrum_node_mdisk_write_mb{id="1"} 0
+	spectrum_node_mdisk_write_mb{id="2"} 0
+	# HELP spectrum_node_mdisk_write_ms Current milliseconds to write to mdisk
+	# TYPE spectrum_node_mdisk_write_ms gauge
+	spectrum_node_mdisk_write_ms{id="1"} 0
+	spectrum_node_mdisk_write_ms{id="2"} 7
 	# HELP spectrum_node_sas_bps Current bytes-per-second being transferred over backend SAS
 	# TYPE spectrum_node_sas_bps gauge
 	spectrum_node_sas_bps{id="1"} 0
@@ -207,6 +231,30 @@ func TestNodeStats(t *testing.T) {
 	# TYPE spectrum_node_total_cache_usage_ratio gauge
 	spectrum_node_total_cache_usage_ratio{id="1"} 0.79
 	spectrum_node_total_cache_usage_ratio{id="2"} 0.79
+	# HELP spectrum_node_vdisk_read_iops Current read I/O-per-second to vdisk
+	# TYPE spectrum_node_vdisk_read_iops gauge
+	spectrum_node_vdisk_read_iops{id="1"} 0
+	spectrum_node_vdisk_read_iops{id="2"} 4
+	# HELP spectrum_node_vdisk_read_mb Current Megabytes-per-second being read from vdisk
+	# TYPE spectrum_node_vdisk_read_mb gauge
+	spectrum_node_vdisk_read_mb{id="1"} 0
+	spectrum_node_vdisk_read_mb{id="2"} 0
+	# HELP spectrum_node_vdisk_read_ms Current milliseconds to read from vdisk
+	# TYPE spectrum_node_vdisk_read_ms gauge
+	spectrum_node_vdisk_read_ms{id="1"} 1
+	spectrum_node_vdisk_read_ms{id="2"} 1
+	# HELP spectrum_node_vdisk_write_iops Current write I/O-per-second to vdisk
+	# TYPE spectrum_node_vdisk_write_iops gauge
+	spectrum_node_vdisk_write_iops{id="1"} 36
+	spectrum_node_vdisk_write_iops{id="2"} 19
+	# HELP spectrum_node_vdisk_write_mb Current Megabytes-per-second being written to vdisk
+	# TYPE spectrum_node_vdisk_write_mb gauge
+	spectrum_node_vdisk_write_mb{id="1"} 0
+	spectrum_node_vdisk_write_mb{id="2"} 0
+	# HELP spectrum_node_vdisk_write_ms Current milliseconds to write to vdisk
+	# TYPE spectrum_node_vdisk_write_ms gauge
+	spectrum_node_vdisk_write_ms{id="1"} 0
+	spectrum_node_vdisk_write_ms{id="2"} 0
 	# HELP spectrum_node_write_cache_usage_ratio Ratio of the write cache usage for the node
 	# TYPE spectrum_node_write_cache_usage_ratio gauge
 	spectrum_node_write_cache_usage_ratio{id="1"} 0.25
@@ -220,7 +268,7 @@ func TestNodeStats(t *testing.T) {
 
 func TestFCPorts(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsportfc", "testdata/lsportfc.jsonnet")
+	c.prepare("rest/v1/lsportfc", "testdata/lsportfc.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeFCPorts(c, r) {
 		t.Errorf("probeFCPorts() returned non-success")
@@ -304,7 +352,7 @@ func TestFCPorts(t *testing.T) {
 
 func TestIPPorts(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/lsportip", "testdata/lsportip.jsonnet")
+	c.prepare("rest/v1/lsportip", "testdata/lsportip.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeIPPorts(c, r) {
 		t.Errorf("probeIPPorts() returned non-success")
@@ -387,6 +435,54 @@ func TestIPPorts(t *testing.T) {
 	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:91:44",node_id="1",state="configured"} 0
 	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:91:44",node_id="1",state="management_only"} 0
 	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:91:44",node_id="1",state="unconfigured"} 1
+	`
+
+	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {
+		t.Fatalf("metric compare: err %v", err)
+	}
+}
+
+func TestQuorumStatus(t *testing.T) {
+	c := newFakeClient()
+	c.prepare("rest/v1/lsquorum", "testdata/lsquorum.jsonnet")
+	r := prometheus.NewPedanticRegistry()
+	if !probeQuorum(c, r) {
+		t.Errorf("probeQuorumStatus() returned non-success")
+	}
+
+	em := `
+	# HELP spectrum_quorum_status Status of quorum
+	# TYPE spectrum_quorum_status gauge
+	spectrum_quorum_status{id="0",object_type="drive",status="offline"} 0
+	spectrum_quorum_status{id="0",object_type="drive",status="online"} 1
+	spectrum_quorum_status{id="1",object_type="drive",status="offline"} 0
+	spectrum_quorum_status{id="1",object_type="drive",status="online"} 1
+	spectrum_quorum_status{id="2",object_type="drive",status="offline"} 0
+	spectrum_quorum_status{id="2",object_type="drive",status="online"} 1
+	`
+
+	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {
+		t.Fatalf("metric compare: err %v", err)
+	}
+}
+
+func TestHostStatus(t *testing.T) {
+	c := newFakeClient()
+	c.prepare("rest/v1/lshost", "testdata/lshost.jsonnet")
+	r := prometheus.NewPedanticRegistry()
+	if !probeHost(c, r) {
+		t.Errorf("probeHostStatus() returned non-success")
+	}
+
+	em := `
+	# HELP spectrum_host_status Status of hosts
+	# TYPE spectrum_host_status gauge
+	spectrum_host_status{hostname="VM1",id="2",port_count="1",protocol="scsi",status="degraded"} 0
+	spectrum_host_status{hostname="VM1",id="2",port_count="1",protocol="scsi",status="offline"} 0
+	spectrum_host_status{hostname="VM1",id="2",port_count="1",protocol="scsi",status="online"} 1
+	spectrum_host_status{hostname="VM2",id="3",port_count="3",protocol="scsi",status="degraded"} 1
+	spectrum_host_status{hostname="VM2",id="3",port_count="3",protocol="scsi",status="offline"} 0
+	spectrum_host_status{hostname="VM2",id="3",port_count="3",protocol="scsi",status="online"} 0
 	`
 
 	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {

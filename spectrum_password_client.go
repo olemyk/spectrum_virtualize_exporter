@@ -21,7 +21,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -62,10 +62,10 @@ func (c *spectrumPasswordClient) Get(path string, query string, obj interface{})
 		return err
 	}
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("Response code was %d, expected 200", resp.StatusCode)
+		return fmt.Errorf("response code was %d, expected 200", resp.StatusCode)
 	}
 
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
@@ -78,7 +78,7 @@ func (c *spectrumPasswordClient) String() string {
 
 func newSpectrumPasswordClient(ctx context.Context, tgt url.URL, hc HTTPClient, user string, passwd string) (*spectrumPasswordClient, error) {
 	u := tgt
-	u.Path = "/rest/auth"
+	u.Path = "/rest/v1/auth"
 	r, err := http.NewRequestWithContext(ctx, "POST", u.String(), nil)
 	if err != nil {
 		return nil, err
@@ -90,7 +90,7 @@ func newSpectrumPasswordClient(ctx context.Context, tgt url.URL, hc HTTPClient, 
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("Login code was %d, expected 200", resp.StatusCode)
+		return nil, fmt.Errorf("login code was %d, expected 200", resp.StatusCode)
 	}
 
 	type login struct {
@@ -98,7 +98,7 @@ func newSpectrumPasswordClient(ctx context.Context, tgt url.URL, hc HTTPClient, 
 	}
 	var obj login
 
-	b, err := ioutil.ReadAll(resp.Body)
+	b, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
