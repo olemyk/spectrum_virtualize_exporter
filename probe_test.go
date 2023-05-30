@@ -60,7 +60,7 @@ func newFakeClient() *fakeClient {
 
 func TestEnclosureStats(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lsenclosurestats", "testdata/lsenclosurestats.jsonnet")
+	c.prepare("rest/v1/lsenclosurestats", "testdata/specv_output_8_5_2_2/lsenclosurestats.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeEnclosureStats(c, r) {
 		t.Errorf("probeEnclosureStats() returned non-success")
@@ -69,10 +69,10 @@ func TestEnclosureStats(t *testing.T) {
 	em := `
 	# HELP spectrum_power_watts Current power draw of enclosure in watts
 	# TYPE spectrum_power_watts gauge
-	spectrum_power_watts{enclosure="1"} 427
+	spectrum_power_watts{enclosure="1"} 480
 	# HELP spectrum_temperature Current enclosure temperature in celsius
 	# TYPE spectrum_temperature gauge
-	spectrum_temperature{enclosure="1"} 26
+	spectrum_temperature{enclosure="1"} 22
 	`
 
 	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {
@@ -81,7 +81,7 @@ func TestEnclosureStats(t *testing.T) {
 }
 func TestDrive(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lsdrive", "testdata/lsdrive.jsonnet")
+	c.prepare("rest/v1/lsdrive", "testdata/specv_output_8_5_2_2/lsdrive.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeDrives(c, r) {
 		t.Errorf("probeDrives() returned non-success")
@@ -90,15 +90,42 @@ func TestDrive(t *testing.T) {
 	em := `
 	# HELP spectrum_drive_status Status of drive
 	# TYPE spectrum_drive_status gauge
-	spectrum_drive_status{enclosure="1",id="0",slot_id="5",status="degraded"} 0
-	spectrum_drive_status{enclosure="1",id="0",slot_id="5",status="offline"} 0
-	spectrum_drive_status{enclosure="1",id="0",slot_id="5",status="online"} 1
-	spectrum_drive_status{enclosure="1",id="1",slot_id="1",status="degraded"} 1
-	spectrum_drive_status{enclosure="1",id="1",slot_id="1",status="offline"} 0
-	spectrum_drive_status{enclosure="1",id="1",slot_id="1",status="online"} 0
-	spectrum_drive_status{enclosure="1",id="17",slot_id="8",status="degraded"} 0
-	spectrum_drive_status{enclosure="1",id="17",slot_id="8",status="offline"} 0
-	spectrum_drive_status{enclosure="1",id="17",slot_id="8",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="0",slot_id="7",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="0",slot_id="7",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="0",slot_id="7",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="1",slot_id="6",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="1",slot_id="6",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="1",slot_id="6",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="10",slot_id="11",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="10",slot_id="11",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="10",slot_id="11",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="11",slot_id="12",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="11",slot_id="12",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="11",slot_id="12",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="2",slot_id="2",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="2",slot_id="2",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="2",slot_id="2",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="3",slot_id="8",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="3",slot_id="8",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="3",slot_id="8",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="4",slot_id="9",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="4",slot_id="9",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="4",slot_id="9",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="5",slot_id="3",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="5",slot_id="3",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="5",slot_id="3",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="6",slot_id="5",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="6",slot_id="5",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="6",slot_id="5",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="7",slot_id="4",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="7",slot_id="4",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="7",slot_id="4",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="8",slot_id="1",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="8",slot_id="1",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="8",slot_id="1",status="online"} 1
+	spectrum_drive_status{enclosure="1",id="9",slot_id="10",status="degraded"} 0
+	spectrum_drive_status{enclosure="1",id="9",slot_id="10",status="offline"} 0
+	spectrum_drive_status{enclosure="1",id="9",slot_id="10",status="online"} 1
 	`
 
 	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {
@@ -108,7 +135,7 @@ func TestDrive(t *testing.T) {
 
 func TestEnclosurePSU(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lsenclosurepsu", "testdata/lsenclosurepsu.jsonnet")
+	c.prepare("rest/v1/lsenclosurepsu", "testdata/specv_output_8_5_2_2/lsenclosurepsu.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeEnclosurePSUs(c, r) {
 		t.Errorf("probeEnclosurePSUs() returned non-success")
@@ -132,7 +159,7 @@ func TestEnclosurePSU(t *testing.T) {
 
 func TestPool(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lsmdiskgrp", "testdata/lsmdiskgrp.jsonnet")
+	c.prepare("rest/v1/lsmdiskgrp", "testdata/specv_output_8_5_2_2/lsmdiskgrp.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probePool(c, r) {
 		t.Errorf("probePool() returned non-success")
@@ -141,20 +168,38 @@ func TestPool(t *testing.T) {
 	em := `
 	# HELP spectrum_pool_capacity_bytes Capacity of pool in bytes
 	# TYPE spectrum_pool_capacity_bytes gauge
-	spectrum_pool_capacity_bytes{id="0",name="Pool0"} 1.0709243254538e+13
+	spectrum_pool_capacity_bytes{id="0",name="DRP_Pool0"} 1.96702630209126e+14
+	spectrum_pool_capacity_bytes{id="1",name="Backup_0"} 1.96702630209126e+14
+	spectrum_pool_capacity_bytes{id="2",name="Application"} 1.96702630209126e+14
+	spectrum_pool_capacity_bytes{id="3",name="DRP_CPool_3"} 1.96702630209126e+14
 	# HELP spectrum_pool_free_bytes Free bytes in pool
 	# TYPE spectrum_pool_free_bytes gauge
-	spectrum_pool_free_bytes{id="0",name="Pool0"} 9.829633952317e+12
+	spectrum_pool_free_bytes{id="0",name="DRP_Pool0"} 1.92139656953856e+14
+	spectrum_pool_free_bytes{id="1",name="Backup_0"} 1.92139656953856e+14
+	spectrum_pool_free_bytes{id="2",name="Application"} 1.92139656953856e+14
+	spectrum_pool_free_bytes{id="3",name="DRP_CPool_3"} 1.92139656953856e+14
 	# HELP spectrum_pool_status Status of pool
 	# TYPE spectrum_pool_status gauge
-	spectrum_pool_status{id="0",name="Pool0",status="offline"} 0
-	spectrum_pool_status{id="0",name="Pool0",status="online"} 1
+	spectrum_pool_status{id="0",name="DRP_Pool0",status="offline"} 0
+	spectrum_pool_status{id="0",name="DRP_Pool0",status="online"} 1
+	spectrum_pool_status{id="1",name="Backup_0",status="offline"} 0
+	spectrum_pool_status{id="1",name="Backup_0",status="online"} 1
+	spectrum_pool_status{id="2",name="Application",status="offline"} 0
+	spectrum_pool_status{id="2",name="Application",status="online"} 1
+	spectrum_pool_status{id="3",name="DRP_CPool_3",status="offline"} 0
+	spectrum_pool_status{id="3",name="DRP_CPool_3",status="online"} 1
 	# HELP spectrum_pool_used_bytes Used bytes in pool
 	# TYPE spectrum_pool_used_bytes gauge
-	spectrum_pool_used_bytes{id="0",name="Pool0"} 5.86252298485e+11
+	spectrum_pool_used_bytes{id="0",name="DRP_Pool0"} 3.331520232161e+12
+	spectrum_pool_used_bytes{id="1",name="Backup_0"} 0
+	spectrum_pool_used_bytes{id="2",name="Application"} 0
+	spectrum_pool_used_bytes{id="3",name="DRP_CPool_3"} 0
 	# HELP spectrum_pool_volume_count Number of volumes associated with pool
 	# TYPE spectrum_pool_volume_count gauge
-	spectrum_pool_volume_count{id="0",name="Pool0"} 44
+	spectrum_pool_volume_count{id="0",name="DRP_Pool0"} 18
+	spectrum_pool_volume_count{id="1",name="Backup_0"} 0
+	spectrum_pool_volume_count{id="2",name="Application"} 17
+	spectrum_pool_volume_count{id="3",name="DRP_CPool_3"} 8
 	`
 
 	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {
@@ -164,7 +209,7 @@ func TestPool(t *testing.T) {
 
 func TestNodeStats(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lsnodecanisterstats", "testdata/lsnodecanisterstats.jsonnet")
+	c.prepare("rest/v1/lsnodecanisterstats", "testdata/specv_output_8_5_2_2/lsnodecanisterstats.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeNodeStats(c, r) {
 		t.Errorf("probeNodeStats() returned non-success")
@@ -268,7 +313,7 @@ func TestNodeStats(t *testing.T) {
 
 func TestFCPorts(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lsportfc", "testdata/lsportfc.jsonnet")
+	c.prepare("rest/v1/lsportfc", "testdata/specv_output_8_5_2_2/lsportfc.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeFCPorts(c, r) {
 		t.Errorf("probeFCPorts() returned non-success")
@@ -277,72 +322,24 @@ func TestFCPorts(t *testing.T) {
 	em := `
 	# HELP spectrum_fc_port_speed_bps Operational speed of port in bits per second
 	# TYPE spectrum_fc_port_speed_bps gauge
-	spectrum_fc_port_speed_bps{adapter_location="2",adapter_port_id="1",node_id="1"} 8e+09
-	spectrum_fc_port_speed_bps{adapter_location="2",adapter_port_id="1",node_id="2"} 8e+09
-	spectrum_fc_port_speed_bps{adapter_location="2",adapter_port_id="2",node_id="1"} 8e+09
-	spectrum_fc_port_speed_bps{adapter_location="2",adapter_port_id="2",node_id="2"} 8e+09
-	spectrum_fc_port_speed_bps{adapter_location="2",adapter_port_id="3",node_id="1"} 0
-	spectrum_fc_port_speed_bps{adapter_location="2",adapter_port_id="3",node_id="2"} 0
-	spectrum_fc_port_speed_bps{adapter_location="2",adapter_port_id="4",node_id="1"} 0
-	spectrum_fc_port_speed_bps{adapter_location="2",adapter_port_id="4",node_id="2"} 0
-	spectrum_fc_port_speed_bps{adapter_location="3",adapter_port_id="1",node_id="1"} 0
-	spectrum_fc_port_speed_bps{adapter_location="3",adapter_port_id="1",node_id="2"} 0
-	spectrum_fc_port_speed_bps{adapter_location="3",adapter_port_id="2",node_id="1"} 0
-	spectrum_fc_port_speed_bps{adapter_location="3",adapter_port_id="2",node_id="2"} 0
-	spectrum_fc_port_speed_bps{adapter_location="3",adapter_port_id="3",node_id="1"} 0
-	spectrum_fc_port_speed_bps{adapter_location="3",adapter_port_id="3",node_id="2"} 0
-	spectrum_fc_port_speed_bps{adapter_location="3",adapter_port_id="4",node_id="1"} 0
-	spectrum_fc_port_speed_bps{adapter_location="3",adapter_port_id="4",node_id="2"} 0
+	spectrum_fc_port_speed_bps{adapter_location="1",adapter_port_id="1",node_id="1"} 3.2e+10
+	spectrum_fc_port_speed_bps{adapter_location="1",adapter_port_id="1",node_id="2"} 3.2e+10
+	spectrum_fc_port_speed_bps{adapter_location="1",adapter_port_id="2",node_id="1"} 3.2e+10
+	spectrum_fc_port_speed_bps{adapter_location="1",adapter_port_id="2",node_id="2"} 3.2e+10
 	# HELP spectrum_fc_port_status Status of Fibre Channel port
 	# TYPE spectrum_fc_port_status gauge
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="1",node_id="1",status="active",wwpn="500507680B218CF8"} 1
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="1",node_id="1",status="inactive_configured",wwpn="500507680B218CF8"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="1",node_id="1",status="inactive_unconfigured",wwpn="500507680B218CF8"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="1",node_id="2",status="active",wwpn="500507680B218CF9"} 1
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="1",node_id="2",status="inactive_configured",wwpn="500507680B218CF9"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="1",node_id="2",status="inactive_unconfigured",wwpn="500507680B218CF9"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="2",node_id="1",status="active",wwpn="500507680B228CF8"} 1
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="2",node_id="1",status="inactive_configured",wwpn="500507680B228CF8"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="2",node_id="1",status="inactive_unconfigured",wwpn="500507680B228CF8"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="2",node_id="2",status="active",wwpn="500507680B228CF9"} 1
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="2",node_id="2",status="inactive_configured",wwpn="500507680B228CF9"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="2",node_id="2",status="inactive_unconfigured",wwpn="500507680B228CF9"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="3",node_id="1",status="active",wwpn="500507680B238CF8"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="3",node_id="1",status="inactive_configured",wwpn="500507680B238CF8"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="3",node_id="1",status="inactive_unconfigured",wwpn="500507680B238CF8"} 1
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="3",node_id="2",status="active",wwpn="500507680B238CF9"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="3",node_id="2",status="inactive_configured",wwpn="500507680B238CF9"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="3",node_id="2",status="inactive_unconfigured",wwpn="500507680B238CF9"} 1
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="4",node_id="1",status="active",wwpn="500507680B248CF8"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="4",node_id="1",status="inactive_configured",wwpn="500507680B248CF8"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="4",node_id="1",status="inactive_unconfigured",wwpn="500507680B248CF8"} 1
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="4",node_id="2",status="active",wwpn="500507680B248CF9"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="4",node_id="2",status="inactive_configured",wwpn="500507680B248CF9"} 0
-	spectrum_fc_port_status{adapter_location="2",adapter_port_id="4",node_id="2",status="inactive_unconfigured",wwpn="500507680B248CF9"} 1
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="1",node_id="1",status="active",wwpn="500507680B318CF8"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="1",node_id="1",status="inactive_configured",wwpn="500507680B318CF8"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="1",node_id="1",status="inactive_unconfigured",wwpn="500507680B318CF8"} 1
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="1",node_id="2",status="active",wwpn="500507680B318CF9"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="1",node_id="2",status="inactive_configured",wwpn="500507680B318CF9"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="1",node_id="2",status="inactive_unconfigured",wwpn="500507680B318CF9"} 1
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="2",node_id="1",status="active",wwpn="500507680B328CF8"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="2",node_id="1",status="inactive_configured",wwpn="500507680B328CF8"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="2",node_id="1",status="inactive_unconfigured",wwpn="500507680B328CF8"} 1
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="2",node_id="2",status="active",wwpn="500507680B328CF9"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="2",node_id="2",status="inactive_configured",wwpn="500507680B328CF9"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="2",node_id="2",status="inactive_unconfigured",wwpn="500507680B328CF9"} 1
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="3",node_id="1",status="active",wwpn="500507680B338CF8"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="3",node_id="1",status="inactive_configured",wwpn="500507680B338CF8"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="3",node_id="1",status="inactive_unconfigured",wwpn="500507680B338CF8"} 1
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="3",node_id="2",status="active",wwpn="500507680B338CF9"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="3",node_id="2",status="inactive_configured",wwpn="500507680B338CF9"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="3",node_id="2",status="inactive_unconfigured",wwpn="500507680B338CF9"} 1
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="4",node_id="1",status="active",wwpn="500507680B348CF8"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="4",node_id="1",status="inactive_configured",wwpn="500507680B348CF8"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="4",node_id="1",status="inactive_unconfigured",wwpn="500507680B348CF8"} 1
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="4",node_id="2",status="active",wwpn="500507680B348CF9"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="4",node_id="2",status="inactive_configured",wwpn="500507680B348CF9"} 0
-	spectrum_fc_port_status{adapter_location="3",adapter_port_id="4",node_id="2",status="inactive_unconfigured",wwpn="500507680B348CF9"} 1
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="1",node_id="1",status="active",wwpn="500507680B11FFC8"} 1
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="1",node_id="1",status="inactive_configured",wwpn="500507680B11FFC8"} 0
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="1",node_id="1",status="inactive_unconfigured",wwpn="500507680B11FFC8"} 0
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="1",node_id="2",status="active",wwpn="500507680B11FFC9"} 1
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="1",node_id="2",status="inactive_configured",wwpn="500507680B11FFC9"} 0
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="1",node_id="2",status="inactive_unconfigured",wwpn="500507680B11FFC9"} 0
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="2",node_id="1",status="active",wwpn="500507680B12FFC8"} 1
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="2",node_id="1",status="inactive_configured",wwpn="500507680B12FFC8"} 0
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="2",node_id="1",status="inactive_unconfigured",wwpn="500507680B12FFC8"} 0
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="2",node_id="2",status="active",wwpn="500507680B12FFC9"} 1
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="2",node_id="2",status="inactive_configured",wwpn="500507680B12FFC9"} 0
+	spectrum_fc_port_status{adapter_location="1",adapter_port_id="2",node_id="2",status="inactive_unconfigured",wwpn="500507680B12FFC9"} 0
 	`
 
 	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {
@@ -352,7 +349,7 @@ func TestFCPorts(t *testing.T) {
 
 func TestIPPorts(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lsportip", "testdata/lsportip.jsonnet")
+	c.prepare("rest/v1/lsportip", "testdata/specv_output_8_5_2_2/lsportip.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeIPPorts(c, r) {
 		t.Errorf("probeIPPorts() returned non-success")
@@ -361,80 +358,20 @@ func TestIPPorts(t *testing.T) {
 	em := `
 	# HELP spectrum_ip_port_link_active Whether link is active
 	# TYPE spectrum_ip_port_link_active gauge
-	spectrum_ip_port_link_active{adapter_location="0",adapter_port_id="1",mac="40:f2:e9:70:ad:ea",node_id="1"} 1
-	spectrum_ip_port_link_active{adapter_location="0",adapter_port_id="1",mac="40:f2:e9:70:ae:56",node_id="2"} 1
-	spectrum_ip_port_link_active{adapter_location="0",adapter_port_id="2",mac="40:f2:e9:70:ad:e8",node_id="1"} 0
-	spectrum_ip_port_link_active{adapter_location="0",adapter_port_id="2",mac="40:f2:e9:70:ae:54",node_id="2"} 0
-	spectrum_ip_port_link_active{adapter_location="0",adapter_port_id="3",mac="40:f2:e9:70:ad:eb",node_id="1"} 0
-	spectrum_ip_port_link_active{adapter_location="0",adapter_port_id="3",mac="40:f2:e9:70:ae:57",node_id="2"} 0
-	spectrum_ip_port_link_active{adapter_location="3",adapter_port_id="1",mac="40:f2:e9:e1:8e:cf",node_id="2"} 0
-	spectrum_ip_port_link_active{adapter_location="3",adapter_port_id="1",mac="40:f2:e9:e1:91:47",node_id="1"} 0
-	spectrum_ip_port_link_active{adapter_location="3",adapter_port_id="2",mac="40:f2:e9:e1:8e:ce",node_id="2"} 0
-	spectrum_ip_port_link_active{adapter_location="3",adapter_port_id="2",mac="40:f2:e9:e1:91:46",node_id="1"} 0
-	spectrum_ip_port_link_active{adapter_location="3",adapter_port_id="3",mac="40:f2:e9:e1:8e:cd",node_id="2"} 0
-	spectrum_ip_port_link_active{adapter_location="3",adapter_port_id="3",mac="40:f2:e9:e1:91:45",node_id="1"} 0
-	spectrum_ip_port_link_active{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:8e:cc",node_id="2"} 0
-	spectrum_ip_port_link_active{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:91:44",node_id="1"} 0
+	spectrum_ip_port_link_active{adapter_location="0",adapter_port_id="1",mac="ff:ff:ff:ff:ff:ff",node_id="1"} 0
+	spectrum_ip_port_link_active{adapter_location="0",adapter_port_id="1",mac="ff:ff:ff:ff:ff:ff",node_id="2"} 0
 	# HELP spectrum_ip_port_speed_bps Operational speed of port in bits per second
 	# TYPE spectrum_ip_port_speed_bps gauge
 	spectrum_ip_port_speed_bps{adapter_location="0",adapter_port_id="1",node_id="1"} 1e+09
 	spectrum_ip_port_speed_bps{adapter_location="0",adapter_port_id="1",node_id="2"} 1e+09
-	spectrum_ip_port_speed_bps{adapter_location="0",adapter_port_id="2",node_id="1"} 0
-	spectrum_ip_port_speed_bps{adapter_location="0",adapter_port_id="2",node_id="2"} 0
-	spectrum_ip_port_speed_bps{adapter_location="0",adapter_port_id="3",node_id="1"} 0
-	spectrum_ip_port_speed_bps{adapter_location="0",adapter_port_id="3",node_id="2"} 0
-	spectrum_ip_port_speed_bps{adapter_location="3",adapter_port_id="1",node_id="1"} 0
-	spectrum_ip_port_speed_bps{adapter_location="3",adapter_port_id="1",node_id="2"} 0
-	spectrum_ip_port_speed_bps{adapter_location="3",adapter_port_id="2",node_id="1"} 0
-	spectrum_ip_port_speed_bps{adapter_location="3",adapter_port_id="2",node_id="2"} 0
-	spectrum_ip_port_speed_bps{adapter_location="3",adapter_port_id="3",node_id="1"} 0
-	spectrum_ip_port_speed_bps{adapter_location="3",adapter_port_id="3",node_id="2"} 0
-	spectrum_ip_port_speed_bps{adapter_location="3",adapter_port_id="4",node_id="1"} 0
-	spectrum_ip_port_speed_bps{adapter_location="3",adapter_port_id="4",node_id="2"} 0
 	# HELP spectrum_ip_port_state Configuration state of Ethernet/IP port
 	# TYPE spectrum_ip_port_state gauge
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="40:f2:e9:70:ad:ea",node_id="1",state="configured"} 1
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="40:f2:e9:70:ad:ea",node_id="1",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="40:f2:e9:70:ad:ea",node_id="1",state="unconfigured"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="40:f2:e9:70:ae:56",node_id="2",state="configured"} 1
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="40:f2:e9:70:ae:56",node_id="2",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="40:f2:e9:70:ae:56",node_id="2",state="unconfigured"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="2",mac="40:f2:e9:70:ad:e8",node_id="1",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="2",mac="40:f2:e9:70:ad:e8",node_id="1",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="2",mac="40:f2:e9:70:ad:e8",node_id="1",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="2",mac="40:f2:e9:70:ae:54",node_id="2",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="2",mac="40:f2:e9:70:ae:54",node_id="2",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="2",mac="40:f2:e9:70:ae:54",node_id="2",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="3",mac="40:f2:e9:70:ad:eb",node_id="1",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="3",mac="40:f2:e9:70:ad:eb",node_id="1",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="3",mac="40:f2:e9:70:ad:eb",node_id="1",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="3",mac="40:f2:e9:70:ae:57",node_id="2",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="3",mac="40:f2:e9:70:ae:57",node_id="2",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="0",adapter_port_id="3",mac="40:f2:e9:70:ae:57",node_id="2",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="1",mac="40:f2:e9:e1:8e:cf",node_id="2",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="1",mac="40:f2:e9:e1:8e:cf",node_id="2",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="1",mac="40:f2:e9:e1:8e:cf",node_id="2",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="1",mac="40:f2:e9:e1:91:47",node_id="1",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="1",mac="40:f2:e9:e1:91:47",node_id="1",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="1",mac="40:f2:e9:e1:91:47",node_id="1",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="2",mac="40:f2:e9:e1:8e:ce",node_id="2",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="2",mac="40:f2:e9:e1:8e:ce",node_id="2",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="2",mac="40:f2:e9:e1:8e:ce",node_id="2",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="2",mac="40:f2:e9:e1:91:46",node_id="1",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="2",mac="40:f2:e9:e1:91:46",node_id="1",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="2",mac="40:f2:e9:e1:91:46",node_id="1",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="3",mac="40:f2:e9:e1:8e:cd",node_id="2",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="3",mac="40:f2:e9:e1:8e:cd",node_id="2",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="3",mac="40:f2:e9:e1:8e:cd",node_id="2",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="3",mac="40:f2:e9:e1:91:45",node_id="1",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="3",mac="40:f2:e9:e1:91:45",node_id="1",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="3",mac="40:f2:e9:e1:91:45",node_id="1",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:8e:cc",node_id="2",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:8e:cc",node_id="2",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:8e:cc",node_id="2",state="unconfigured"} 1
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:91:44",node_id="1",state="configured"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:91:44",node_id="1",state="management_only"} 0
-	spectrum_ip_port_state{adapter_location="3",adapter_port_id="4",mac="40:f2:e9:e1:91:44",node_id="1",state="unconfigured"} 1
+	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="ff:ff:ff:ff:ff:ff",node_id="1",state="configured"} 0
+	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="ff:ff:ff:ff:ff:ff",node_id="1",state="management_only"} 0
+	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="ff:ff:ff:ff:ff:ff",node_id="1",state="unconfigured"} 1
+	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="ff:ff:ff:ff:ff:ff",node_id="2",state="configured"} 0
+	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="ff:ff:ff:ff:ff:ff",node_id="2",state="management_only"} 0
+	spectrum_ip_port_state{adapter_location="0",adapter_port_id="1",mac="ff:ff:ff:ff:ff:ff",node_id="2",state="unconfigured"} 1
 	`
 
 	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {
@@ -444,7 +381,7 @@ func TestIPPorts(t *testing.T) {
 
 func TestQuorumStatus(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lsquorum", "testdata/lsquorum.jsonnet")
+	c.prepare("rest/v1/lsquorum", "testdata/specv_output_8_5_2_2/lsquorum.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeQuorum(c, r) {
 		t.Errorf("probeQuorumStatus() returned non-success")
@@ -468,7 +405,7 @@ func TestQuorumStatus(t *testing.T) {
 
 func TestHostStatus(t *testing.T) {
 	c := newFakeClient()
-	c.prepare("rest/v1/lshost", "testdata/lshost.jsonnet")
+	c.prepare("rest/v1/lshost", "testdata/specv_output_8_5_2_2/lshost.jsonnet")
 	r := prometheus.NewPedanticRegistry()
 	if !probeHost(c, r) {
 		t.Errorf("probeHostStatus() returned non-success")
@@ -477,12 +414,15 @@ func TestHostStatus(t *testing.T) {
 	em := `
 	# HELP spectrum_host_status Status of hosts
 	# TYPE spectrum_host_status gauge
-	spectrum_host_status{hostname="VM1",id="2",port_count="1",protocol="scsi",status="degraded"} 0
-	spectrum_host_status{hostname="VM1",id="2",port_count="1",protocol="scsi",status="offline"} 0
-	spectrum_host_status{hostname="VM1",id="2",port_count="1",protocol="scsi",status="online"} 1
-	spectrum_host_status{hostname="VM2",id="3",port_count="3",protocol="scsi",status="degraded"} 1
-	spectrum_host_status{hostname="VM2",id="3",port_count="3",protocol="scsi",status="offline"} 0
-	spectrum_host_status{hostname="VM2",id="3",port_count="3",protocol="scsi",status="online"} 0
+	spectrum_host_status{hostname="VMware_202",id="1",port_count="1",protocol="rdmanvme",status="degraded"} 0
+	spectrum_host_status{hostname="VMware_202",id="1",port_count="1",protocol="rdmanvme",status="offline"} 0
+	spectrum_host_status{hostname="VMware_202",id="1",port_count="1",protocol="rdmanvme",status="online"} 1
+	spectrum_host_status{hostname="x3690-x5-01",id="0",port_count="2",protocol="scsi",status="degraded"} 0
+	spectrum_host_status{hostname="x3690-x5-01",id="0",port_count="2",protocol="scsi",status="offline"} 0
+	spectrum_host_status{hostname="x3690-x5-01",id="0",port_count="2",protocol="scsi",status="online"} 1
+	spectrum_host_status{hostname="x3690_x5_04",id="2",port_count="2",protocol="scsi",status="degraded"} 0
+	spectrum_host_status{hostname="x3690_x5_04",id="2",port_count="2",protocol="scsi",status="offline"} 0
+	spectrum_host_status{hostname="x3690_x5_04",id="2",port_count="2",protocol="scsi",status="online"} 1
 	`
 
 	if err := testutil.GatherAndCompare(r, strings.NewReader(em)); err != nil {

@@ -1,0 +1,42 @@
+[
+   {
+      "IO_group_id" : "0",
+      "IO_group_name" : "io_grp0",
+      "UPS_serial_number" : "",
+      "UPS_unique_id" : "",
+      "WWNN" : "500507680B00FFC8",
+      "canister_id" : "1",
+      "config_node" : "yes",
+      "enclosure_id" : "1",
+      "enclosure_serial_number" : "79F3433",
+      "hardware" : "6H2",
+      "id" : "1",
+      "iscsi_alias" : "",
+      "iscsi_name" : "iqn.1986-03.com.ibm:2145.fs-5200-1.node1",
+      "name" : "node1",
+      "panel_name" : "01-1",
+      "site_id" : "",
+      "site_name" : "",
+      "status" : "online"
+   },
+   {
+      "IO_group_id" : "0",
+      "IO_group_name" : "io_grp0",
+      "UPS_serial_number" : "",
+      "UPS_unique_id" : "",
+      "WWNN" : "500507680B00FFC9",
+      "canister_id" : "2",
+      "config_node" : "no",
+      "enclosure_id" : "1",
+      "enclosure_serial_number" : "79F3433",
+      "hardware" : "6H2",
+      "id" : "2",
+      "iscsi_alias" : "",
+      "iscsi_name" : "iqn.1986-03.com.ibm:2145.fs-5200-1.node2",
+      "name" : "node2",
+      "panel_name" : "01-2",
+      "site_id" : "",
+      "site_name" : "",
+      "status" : "online"
+   }
+]

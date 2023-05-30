@@ -1,0 +1,50 @@
+[
+   {
+      "host_cluster_id" : "",
+      "host_cluster_name" : "",
+      "id" : "0",
+      "iogrp_count" : "4",
+      "name" : "x3690-x5-01",
+      "owner_id" : "",
+      "owner_name" : "",
+      "port_count" : "2",
+      "portset_id" : "64",
+      "portset_name" : "portset64",
+      "protocol" : "scsi",
+      "site_id" : "",
+      "site_name" : "",
+      "status" : "online"
+   },
+   {
+      "host_cluster_id" : "",
+      "host_cluster_name" : "",
+      "id" : "1",
+      "iogrp_count" : "4",
+      "name" : "VMware_202",
+      "owner_id" : "",
+      "owner_name" : "",
+      "port_count" : "1",
+      "portset_id" : "0",
+      "portset_name" : "portset0",
+      "protocol" : "rdmanvme",
+      "site_id" : "",
+      "site_name" : "",
+      "status" : "online"
+   },
+   {
+      "host_cluster_id" : "",
+      "host_cluster_name" : "",
+      "id" : "2",
+      "iogrp_count" : "4",
+      "name" : "x3690_x5_04",
+      "owner_id" : "",
+      "owner_name" : "",
+      "port_count" : "2",
+      "portset_id" : "64",
+      "portset_name" : "portset64",
+      "protocol" : "scsi",
+      "site_id" : "",
+      "site_name" : "",
+      "status" : "online"
+   }
+]

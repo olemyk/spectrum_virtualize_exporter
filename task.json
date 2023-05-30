@@ -1,0 +1,12 @@
+{
+    "type": "docker-build",
+    "label": "docker-build-base",
+    "platform": "go",
+    "dockerBuild": {
+        "tag": "spectrum_virtualize.image",
+        "dockerfile": "${workspaceFolder}/Dockerfile.base",
+        "context": "${workspaceFolder}",
+        "platform": "linux/arm64"
+    }
+}
+    
