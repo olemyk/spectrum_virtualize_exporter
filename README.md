@@ -20,7 +20,7 @@ Prometheus exporter for IBM Spectrum Virtualize (e.g. IBM FlashSystem).
 ------
 
 ## Current Limitation
-- Node Exporter currently dont't work with SVC Controllers, as lsenclosurestats is not giving out information and lsnodecanister is different for some reason.. 
+- Node Exporter currently work with SVC Controllers, however lsenclosurestats and lsenclosurepsu is not giving out information  
 - No performance on volume and singel hosts. (Missing function on SpecV)
 - Secure traffic between 
 - SpecV 8.4.2 code or later.  (New restapi interface from 8.4.2)
@@ -30,6 +30,8 @@ Prometheus exporter for IBM Spectrum Virtualize (e.g. IBM FlashSystem).
 ## Tested on:
 
  -  IBM FlashSystem 8.4.2.x
+ -  IBM FlashSystem 8.5.2.2
+ -  IBM SVC 8.5.0.6
 
   - Won't work on SpecV code below: 8.4.0.x
     - 8.4.0.x - don't have the new rest api version rest/v1/x  - they you need change api call to be without v1/ in probe.go
@@ -83,6 +85,19 @@ Prometheus exporter for IBM Spectrum Virtualize (e.g. IBM FlashSystem).
  * `spectrum_quorum_status`
  * `spectrum_host_status`
 
+
+### info about stats
+
+- lsnodecanisterstats and lsnodestats are the same
+On SVC DH8 there is no output from:
+ - lsenclosurepsu (there is problem reading out info from SVC Machines)
+ - lsdrive (no internal drives normally, if you dont have an SAS expansion)
+ - lsenclosurestats (is giving out error, so here i needed to add a trigger model = SVC) there is problem reading out info from SVC Machines
+    `error code: 1, error text: CMMVC6051E An unsupported action was selected.` 
+
+
+
+
 ## Missing Metrics?
 
 Please [file an issue](https://github.com/bluecmd/spectrum_virtualize_exporter/issues/new) describing what metrics you'd like to see.
@@ -92,18 +107,26 @@ Include as much details as possible please, e.g. how the perfect Prometheus metr
 
 
 ## Future enhancements
-- IBM SVC support
-- Test on IBM SpecV 8.5.x code. 
+- Test on IBM SpecV 8.6.x code. 
 - Display microseconds instead of milliseconds
 - Invidual Volume Performance (When API is available in restapi)
 - Invidual Host performance.  (When API is available in restapi)
-- Uptime, drive temp, 
+- Uptime, drive temp.
 
 
 -----
 
 ## Usage for SpecV Node Exporter.
 
+**Variables:**
+```
+-auth-file spectrum-monitor.yaml , "file containing the authentication map to use when connecting to a Spectrum Virtualize device
+-listen  Default:9747 - port to listen on
+-timeoutSeconds  Default:30, - max seconds to allow a scrape to take
+-insecure insecure  false - Allow insecure certificates
+-extra-ca-cert -file containing extra PEMs to add to the CA trust store
+-SVC         Default: false, "Run with SVC true to skip som tasks (lsenclosurestats)
+```
 
 ### **Example**
 
@@ -450,6 +473,8 @@ To Test that we can see data, we can do following:
 
 Press the endpoint http://ip:9747/probe and you will get information about probe metrics. 
 
+http://ip:9747/probe?target=https%3A%2F%2F10.32.64.128%3A7443
+
 ![Prometheus](/images/specv_exporter_2.png)
 
 
@@ -621,3 +646,9 @@ Se example below:
 "error code: 1, error text: CMMVC6051E An unsupported action was selected."%
 ```
 
+
+
+
+Test with GO
+
+/usr/local/go/bin/go test -timeout 30s -run ^(TestEnclosureStats|TestDrive|TestEnclosurePSU|TestPool|TestNodeStats|TestFCPorts|TestIPPorts|TestQuorumStatus|TestHostStatus)$ github.com/olemyk/spectrum_virtualize_exporter

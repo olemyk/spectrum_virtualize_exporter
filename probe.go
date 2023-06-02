@@ -212,9 +212,9 @@ func probeNodeStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	registry.MustRegister(mVDISKWMB)
 
 	type nodeStat struct {
-		NodeID      string `json:"node_id"`
-		StatName    string `json:"stat_name"`
-		StatCurrent int    `json:"stat_current,string"`
+		NodeID      string  `json:"node_id"`
+		StatName    string  `json:"stat_name"`
+		StatCurrent float64 `json:"stat_current,string"`
 	}
 	var st []nodeStat
 
@@ -273,7 +273,12 @@ func probeNodeStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	return true
 }
 
-func probeEnclosureStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
+func probeEnclosureStats(c SpectrumHTTP, registry *prometheus.Registry, SVC bool) bool {
+	if SVC {
+		log.Println("Skipping probeEnclosureStats for model SVC")
+		return true
+	}
+
 	var (
 		mPower = prometheus.NewGaugeVec(
 			prometheus.GaugeOpts{
@@ -301,9 +306,16 @@ func probeEnclosureStats(c SpectrumHTTP, registry *prometheus.Registry) bool {
 	}
 	var st []enclosureStats
 
+	// if err := c.Get("rest/v1/lsenclosurestats", "", &st); err != nil {
+	// 	log.Printf("Error: %v", err)
+	// 	return false
+	// }
 	if err := c.Get("rest/v1/lsenclosurestats", "", &st); err != nil {
-		log.Printf("Error: %v", err)
-		return false
+		if !strings.Contains(err.Error(), "409") {
+			log.Printf("Error: %v", err)
+			return false
+		}
+		log.Printf("Conflict detected for lsenclosurestats, If you are using SVC this is normal")
 	}
 
 	for _, s := range st {
@@ -734,7 +746,7 @@ func probe(ctx context.Context, target string, registry *prometheus.Registry, hc
 	}
 
 	// TODO: Make parallel
-	success := probeEnclosureStats(c, registry) &&
+	success := probeEnclosureStats(c, registry, *SVC) &&
 		probeEnclosurePSUs(c, registry) &&
 		probePool(c, registry) &&
 		probeDrives(c, registry) &&

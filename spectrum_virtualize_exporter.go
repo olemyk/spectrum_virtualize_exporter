@@ -40,6 +40,7 @@ var (
 	timeoutSeconds = flag.Int("scrape-timeout", 30, "max seconds to allow a scrape to take")
 	insecure       = flag.Bool("insecure", false, "Allow insecure certificates")
 	extraCAs       = flag.String("extra-ca-cert", "", "file containing extra PEMs to add to the CA trust store")
+	SVC            = flag.Bool("SVC", false, "Run with SVC true to skip som tasks")
 
 	authMap = map[string]Auth{}
 )
@@ -148,6 +149,6 @@ func main() {
 		probeHandler(w, r, tr)
 	})
 	go http.ListenAndServe(*listen, nil)
-	log.Printf("Spectrum Virtualize exporter running, listening on %q", *listen)
+	log.Printf("Storage Virtualize exporter running, listening on %q", *listen)
 	select {}
 }

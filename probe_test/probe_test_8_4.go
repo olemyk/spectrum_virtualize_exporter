@@ -58,11 +58,11 @@ func newFakeClient() *fakeClient {
 	return &fakeClient{data: map[string][]byte{}}
 }
 
-func TestEnclosureStats(t *testing.T) {
+func TestEnclosureStats_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsenclosurestats", "testdata/lsenclosurestats.jsonnet")
 	r := prometheus.NewPedanticRegistry()
-	if !probeEnclosureStats(c, r) {
+	if !probeEnclosureStats(c, r, false) {
 		t.Errorf("probeEnclosureStats() returned non-success")
 	}
 
@@ -79,7 +79,7 @@ func TestEnclosureStats(t *testing.T) {
 		t.Fatalf("metric compare: err %v", err)
 	}
 }
-func TestDrive(t *testing.T) {
+func TestDrive_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsdrive", "testdata/lsdrive.jsonnet")
 	r := prometheus.NewPedanticRegistry()
@@ -106,7 +106,7 @@ func TestDrive(t *testing.T) {
 	}
 }
 
-func TestEnclosurePSU(t *testing.T) {
+func TestEnclosurePSU_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsenclosurepsu", "testdata/lsenclosurepsu.jsonnet")
 	r := prometheus.NewPedanticRegistry()
@@ -130,7 +130,7 @@ func TestEnclosurePSU(t *testing.T) {
 	}
 }
 
-func TestPool(t *testing.T) {
+func TestPool_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsmdiskgrp", "testdata/lsmdiskgrp.jsonnet")
 	r := prometheus.NewPedanticRegistry()
@@ -162,7 +162,7 @@ func TestPool(t *testing.T) {
 	}
 }
 
-func TestNodeStats(t *testing.T) {
+func TestNodeStats_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsnodecanisterstats", "testdata/lsnodecanisterstats.jsonnet")
 	r := prometheus.NewPedanticRegistry()
@@ -266,7 +266,7 @@ func TestNodeStats(t *testing.T) {
 	}
 }
 
-func TestFCPorts(t *testing.T) {
+func TestFCPorts_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsportfc", "testdata/lsportfc.jsonnet")
 	r := prometheus.NewPedanticRegistry()
@@ -350,7 +350,7 @@ func TestFCPorts(t *testing.T) {
 	}
 }
 
-func TestIPPorts(t *testing.T) {
+func TestIPPorts_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsportip", "testdata/lsportip.jsonnet")
 	r := prometheus.NewPedanticRegistry()
@@ -442,7 +442,7 @@ func TestIPPorts(t *testing.T) {
 	}
 }
 
-func TestQuorumStatus(t *testing.T) {
+func TestQuorumStatus_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsquorum", "testdata/lsquorum.jsonnet")
 	r := prometheus.NewPedanticRegistry()
@@ -466,7 +466,7 @@ func TestQuorumStatus(t *testing.T) {
 	}
 }
 
-func TestHostStatus(t *testing.T) {
+func TestHostStatus_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lshost", "testdata/lshost.jsonnet")
 	r := prometheus.NewPedanticRegistry()
