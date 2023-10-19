@@ -50,4 +50,4 @@ USER appuser:appuser
 
 # Port on which the service will be exposed.
 EXPOSE 9747
-CMD ["./main", "-auth-file", "/config/spectrum-monitor.yaml", "-extra-ca-cert", "~/tls.crt"]
+CMD ["./main", "-auth-file", "/config/virtualize-monitor.yaml", "-extra-ca-cert", "~/tls.crt"]

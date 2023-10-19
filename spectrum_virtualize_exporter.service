@@ -4,7 +4,7 @@ Description=spectrum_virtualize_exporter
 [Service]
 User=spectrum_virtualize_exporter
 ExecStart=/usr/local/bin/spectrum_virtualize_exporter \
-	-auth-file /home/spectrum_virtualize_exporter/spectrum-monitor.yaml \
+	-auth-file /home/spectrum_virtualize_exporter/virtualize-monitor.yaml \
 	-extra-ca-cert /home/spectrum_virtualize_exporter/namecheap.ca.crt
 
 [Install]

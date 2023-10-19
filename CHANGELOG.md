@@ -1,3 +1,10 @@
+## 0.30.0 / 2023-10-19
+
+* [FEATURE/BUGFIX] Added Toggle for SVC, so it don't fails 
+* [ENHANCEMENT] Updated readme to include usage installation. 
+* [ENHANCEMENT] Adding Test for differnt IBM Storage Versions, 8.6.0.0 
+* [BUGFIX] And a lot more.. 
+
 ## 0.20.0 / 2022-10-10
 
 * [FEATURE] Added Quorum Status.

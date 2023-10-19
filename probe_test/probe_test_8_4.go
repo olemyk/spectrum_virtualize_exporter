@@ -79,6 +79,10 @@ func TestEnclosureStats_8_4(t *testing.T) {
 		t.Fatalf("metric compare: err %v", err)
 	}
 }
+
+func probeEnclosureStats(c *fakeClient, r *prometheus.Registry, false bool) {
+	panic("unimplemented")
+}
 func TestDrive_8_4(t *testing.T) {
 	c := newFakeClient()
 	c.prepare("rest/v1/lsdrive", "testdata/lsdrive.jsonnet")
